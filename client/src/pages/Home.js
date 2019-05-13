@@ -24,8 +24,10 @@ class Home extends Component {
       },
       date: {
         state: 0,  // 0: Init from Home; 1. Update from DateRange; 2. Generate via new record
-        startDate: new Date("2019-04-01"),  // HJ Calender Adjust
-        endDate: new Date("2019-04-30")
+        // startDate: new Date("2019-04-01"),  // HJ Calender Adjust
+        // endDate: new Date("2019-04-30")
+        startDate: this.getStartDate(),
+        endDate: new Date()
       },
       options: {
         series: [],
@@ -42,11 +44,11 @@ class Home extends Component {
   //   return outputDate;
   // }
 
-  // getStartDate() {
-  //   let startDate = new Date();
-  //   startDate.setDate(startDate.getDate()-30)
-  //   return startDate;
-  // }
+  getStartDate() {
+    let startDate = new Date();
+    startDate.setDate(startDate.getDate()-30)
+    return startDate;
+  }
 
   getCurrentCategory = (id, name) => {
     this.setState({

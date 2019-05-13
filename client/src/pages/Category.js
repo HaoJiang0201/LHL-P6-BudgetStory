@@ -46,9 +46,6 @@ class ModalEditRecord extends React.Component{
 
   render(){
 
-    console.log("Edit Category: id = ", this.props.id);
-    console.log("Edit Category: id = ", this.props.name);
-    // let currentDateString = this.currentDate.toISOString().split('T')[0];
     return(
       <div>
         <img className='editRecordPencil' onClick={this.handleShow} width='8%' src={pencil} />
@@ -99,18 +96,21 @@ class ModalEditCategory extends React.Component{
     editCategory = (event) => {
       event.preventDefault();
 
-      console.log('Banana', this.props.id);
+      // let notes = "";
+      // if(!event.target.notes.value) {
+      //   notes = event.target.notes.value;
+      // }
 
       const editCat = {
         id: this.props.id,
         name: event.target.name.value,
-        notes: event.target.notes.value
+        notes: ""
       }
 
       axios.post('/api/editCategory', {editCat}).then((response) => {
-      this.props.update()
-      this.handleClose()
-      })
+        this.props.update();
+        this.handleClose();
+      });
 
     }
 

@@ -31,7 +31,7 @@ class Navbar extends Component {
               <a>Write Your Own BudgeStory</a>
             </div>
           <div className="userInfo">
-            <a>Brendan</a>
+            <a>Hao Jiang</a>
           </div>
       </nav>
     )
