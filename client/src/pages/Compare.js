@@ -37,10 +37,10 @@ class Compare extends Component {
       },
       date: {
         state: 0,  // 0: Init from Home; 1. Update from DateRange; 2. Generate via new record; 4. Init from Compare
-        startDate: new Date("2019-01-01"),  // HJ Calender Adjust
-        endDate: new Date("2019-04-30")
-        // startDate: this.getStartDate(),
-        // endDate: new Date()
+        // startDate: new Date("2019-01-01"),  // HJ Calender Adjust
+        // endDate: new Date("2019-04-30")
+        startDate: this.getStartDate(),
+        endDate: new Date()
       },
       options: {
         series: [],
@@ -68,7 +68,7 @@ class Compare extends Component {
 
   getStartDate() {
     let startDate = new Date();
-    startDate.setDate(startDate.getDate()-60)
+    startDate.setDate(startDate.getDate()-90)
     return startDate;
   }
 
@@ -161,9 +161,6 @@ class Compare extends Component {
     endList.push(year + "-" + start.stringISO.split('-')[1] + "-" + this.getMonthEndDate(startMonth));
     columnXCategories.push(this.getMonthCategory(startMonth));
     let monthNum = endMonth - startMonth + 1;
-    // console.log("divideByMonth >>> monthNum : " + monthNum + ", startMonth: " + startMonth + ", endMonth : " + endMonth);
-    // console.log("divideByMonth >>> startMonth : ", startMonth);
-    // console.log("divideByMonth >>> endMonth : ", endMonth);
     if(monthNum >= 2) {
       for(let i = startMonth + 1; i < endMonth; i ++) {
         startList.push(year + "-" + this.getMonthString(i) + "-01");
@@ -174,9 +171,6 @@ class Compare extends Component {
       endList.push(end.stringISO);
       columnXCategories.push(this.getMonthCategory(endMonth));
     }
-    // console.log("divideByMonth >>> startList : ", startList);
-    // console.log("divideByMonth >>> endList : ", endList);
-    // console.log("divideByMonth >>> columnXCategories : ", columnXCategories);
 
     return {startList: startList, endList: endList};
   }
@@ -184,7 +178,6 @@ class Compare extends Component {
   getWeekEndDate (start, monthID) {
     let endString = "31";
     let endInt = start + 6;
-    // console.log("Compare Page >>> getWeekEndDate: endInt = ", endInt);
     let endMonth = parseInt(this.getMonthEndDate(monthID), 10);
     if(endInt > endMonth) {
       endInt = endMonth;
@@ -196,7 +189,6 @@ class Compare extends Component {
         endString = endInt.toString();
       }
     }
-    // console.log("Compare Page >>> getWeekEndDate: endString = ", endString);
     return {int: endInt, string: endString};
   }
 
@@ -224,9 +216,6 @@ class Compare extends Component {
       columnXCategories.push("Week" + i);
     }
     columnXCategories.push("Week" + weekNum);
-    // console.log("Compare Page >>> divideByWeek: startList = ", startList);
-    // console.log("Compare Page >>> divideByWeek: endList = ", endList);
-    // console.log("Compare Page >>> divideByWeek: columnXCategories = ", columnXCategories);
 
     return {startList: startList, endList: endList};
   }
@@ -268,9 +257,6 @@ class Compare extends Component {
         ]
       };
     }
-    // console.log("Compare >>> currentColumnOptions: columnData = ", columnData[1].data);
-    // console.log("Compare >>> currentColumnOptions: columnDataBK = ", columnDataBK[1].data);
-    // console.log("Compare >>> currentColumnOptions: optionsObj = ", optionsObj);
     return optionsObj;
   }
 
@@ -287,12 +273,12 @@ class Compare extends Component {
       day: "Sun"
     };
     if(startDate){
-      startDate.setDate(startDate.getDate()-1);  // HJ Calender Adjust
+      // startDate.setDate(startDate.getDate()-1);  // HJ Calender Adjust
       start.stringISO = startDate.toISOString().split('T')[0];
       start.day = startDate.toString().split(' ')[0];
     }
     if(endDate){
-      endDate.setDate(endDate.getDate()-1);  // HJ Calender Adjust
+      // endDate.setDate(endDate.getDate()-1);  // HJ Calender Adjust
       end.stringISO = endDate.toISOString().split('T')[0];
       end.day = endDate.toString().split(' ')[0];
     }
@@ -348,9 +334,9 @@ class Compare extends Component {
         columnDataBK = JSON.parse(JSON.stringify(data.column));
 
         if(state === 1) {  // HJ Calender Adjust
-          startCalender.setDate(startCalender.getDate() + 1);
-          endCalender.setDate(endCalender.getDate() + 1);
-          // console.log("after axio >>> state = "  + state + ", start = " + startCalender.toISOString().split('T')[0] + "， end = " , endCalender.toISOString().split('T')[0]);
+          // startCalender.setDate(startCalender.getDate() + 1);
+          // endCalender.setDate(endCalender.getDate() + 1);
+          console.log("after axio >>> state = "  + state + ", start = " + startCalender.toISOString().split('T')[0] + "， end = " , endCalender.toISOString().split('T')[0]);
         }
         let balanceValue = (pie.series[0].data[1].v - pie.series[0].data[0].v).toFixed(2);
         let columnOptions = this.currentColumnOptions(0);

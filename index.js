@@ -530,7 +530,7 @@ app.post('/api/deleteCategory', (req, res) => {
 });
 
 app.post('/api/editRecord', (req, res) => {
-  knex('records').where({id: req.body.editRec.id}).update({notes: req.body.editRec.name, value: req.body.editRec.value, date:req.body.editRec.date}).then(result =>
+  knex('records').where({id: req.body.newRecord.id}).update({value: req.body.newRecord.value, date:req.body.newRecord.date, notes: req.body.newRecord.notes}).then(result =>
     {res.json(result)})
 });
 

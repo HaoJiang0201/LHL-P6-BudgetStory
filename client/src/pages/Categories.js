@@ -8,21 +8,18 @@ import '../App/styles/categoriesPage.css'
 import Back from '../App/picture/back.jpg'
 import NavBar from './Navbar.js'
 
-
-
 class ModalCreateRecord extends React.Component{
   constructor(props, context) {
     super(props, context);
-
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
-
     this.state = {
       show: false,
     };
-     this.currentDate = new Date();
+    this.currentDate = new Date();
   }
 
+  // Create New Record Button Clicked
   createRecord = (event) => {
     event.preventDefault();
     const newRec = {
@@ -30,9 +27,8 @@ class ModalCreateRecord extends React.Component{
       category_id: this.props.parentCategory,
       value: Math.round((event.target.value.value*100) * 100) / 100,
       date: event.target.date.value
-    }
+    };
     axios.post('/newRecord', {newRec}).then((response) => {
-      console.log('record Posted')
       this.props.update();
       this.handleClose();
     })

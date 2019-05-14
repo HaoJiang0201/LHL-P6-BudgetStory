@@ -8,8 +8,10 @@ class DateRange extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: this.getCalenderDate(this.props.date.startDate),
-      endDate: this.getCalenderDate(this.props.date.endDate)
+      // startDate: this.getCalenderDate(this.props.date.startDate),
+      // endDate: this.getCalenderDate(this.props.date.endDate)
+      startDate: props.date.startDate,
+      endDate: props.date.endDate
     };
   }
 

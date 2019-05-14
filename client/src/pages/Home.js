@@ -66,11 +66,11 @@ class Home extends Component {
     let endCalender = endDate;
 
     if(startDate){
-      startDate.setDate(startDate.getDate()-1);  // HJ Calender Adjust
+      // startDate.setDate(startDate.getDate()-1);  // HJ Calender Adjust
       startDateString = startDate.toISOString().split('T')[0]
     }
     if(endDate){
-      endDate.setDate(endDate.getDate()-1);  // HJ Calender Adjust
+      // endDate.setDate(endDate.getDate()-1);  // HJ Calender Adjust
       endDateString = endDate.toISOString().split('T')[0]
     }
 
@@ -102,8 +102,8 @@ class Home extends Component {
         });
 
         if(state === 1) {  // HJ Calender Adjust
-          startCalender.setDate(startCalender.getDate() + 1);
-          endCalender.setDate(endCalender.getDate() + 1);
+          // startCalender.setDate(startCalender.getDate() + 1);
+          // endCalender.setDate(endCalender.getDate() + 1);
         }
         console.log("Home >>> after axios: start = " + startCalender.toISOString().split('T')[0] + ", end = " + endCalender.toISOString().split('T')[0]);
         let balanceValue = (data.series[0].data[1].v - data.series[0].data[0].v).toFixed(2);

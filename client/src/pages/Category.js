@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { /*Card,*/ Form, Modal, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
+import { InputGroup, Form, Modal, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
 import axios from 'axios';
 import trashCan from '../assets/trashcan.png'
 import pencil from '../assets/edit.png'
@@ -21,17 +21,17 @@ class ModalEditRecord extends React.Component{
     editRecord = (event) => {
       event.preventDefault();
 
-      const editRec = {
+      const newRecord = {
         id: this.props.id,
-        name: event.target.name.value,
         value: Math.round((event.target.value.value*100) * 100) / 100,
-        date: event.target.date.value
+        date: event.target.date.value,
+        notes: event.target.notes.value
       }
 
-      axios.post('/api/editRecord', {editRec}).then((response) => {
-      this.props.update()
-      this.handleClose()
-      })
+      axios.post('/api/editRecord', {newRecord}).then((response) => {
+        this.props.update();
+        this.handleClose();
+      });
 
     }
 
@@ -53,28 +53,38 @@ class ModalEditRecord extends React.Component{
           <Modal.Header closeButton>
             <Modal.Title>Edit Record</Modal.Title>
           </Modal.Header>
-            <Modal.Body>
-              <Form id="record" onSubmit={this.editRecord}>
+          <Modal.Body>
+            <Form id="record" onSubmit={this.editRecord}>
               <Form.Group controlId="formGroupEmail">
-              <Form.Label>Record value:</Form.Label>
-              <Form.Control type="number" step='0.01' placeholder={"$"+this.props.price} name='value' />
+                <Form.Label>Value:</Form.Label>
+                <InputGroup>
+                  <InputGroup.Prepend>
+                    <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <Form.Control
+                    type="number"
+                    step='0.01'
+                    defaultValue={this.props.price}
+                    placeholder={"$"+this.props.price}
+                    name='value'
+                  />
+                </InputGroup>
               </Form.Group>
               <Form.Group controlId="recordDate">
-              <Form.Label>Date:</Form.Label>
-              <Form.Control type="text" placeholder={this.props.date} name='date' />
-            </Form.Group>
-              <Form.Group controlId="formGroupEmail">
-              <Form.Label>Record notes:</Form.Label>
-              <Form.Control type="text" placeholder={this.props.notes} name='name' />
+                <Form.Label>Date:</Form.Label>
+                <Form.Control type="text" defaultValue={this.props.date} placeholder={this.props.date} name='date' />
               </Form.Group>
-
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="primary" type="submit" form="record">
-                Edit
-              </Button>
-            </Modal.Footer>
+              <Form.Group controlId="formGroupEmail">
+                <Form.Label>Notes:</Form.Label>
+                <Form.Control type="text" defaultValue={this.props.notes} placeholder={this.props.notes} name='notes' />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" type="submit" form="record">
+              Edit
+            </Button>
+          </Modal.Footer>
         </Modal>
       </div>
     );
