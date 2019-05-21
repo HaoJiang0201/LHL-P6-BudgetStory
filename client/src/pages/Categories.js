@@ -213,20 +213,20 @@ class Helper extends Component {
 
 class Categories extends Component {
 
-   constructor(props) {
-        super(props);
-        this.updateCurrentGen = this.updateCurrentGen.bind(this);
-        this.findLineage = this.findLineage.bind(this);
-        this.state = {
-          showCategoryOptions: false,
-          categories: [],
-          records: [],
-          parentId: 0,
-          parentName: null,
-          currentCategory: null,
-          currentCatName: null
-        }
+  constructor(props) {
+    super(props);
+    this.updateCurrentGen = this.updateCurrentGen.bind(this);
+    this.findLineage = this.findLineage.bind(this);
+    this.state = {
+      showCategoryOptions: false,
+      categories: [],
+      records: [],
+      parentId: 0,
+      parentName: null,
+      currentCategory: null,
+      currentCatName: null
     }
+  }
 
   toggleCategory = (x,y) => {
 
@@ -238,90 +238,87 @@ class Categories extends Component {
 
   }
 
-    updateCurrentGen(setGen, setName){
-      this.setState({
-        parentId: setGen,
-        parentName: setName
-      })
-      this.refreshAsync()
+  updateCurrentGen(setGen, setName){
+    this.setState({
+      parentId: setGen,
+      parentName: setName
+    })
+    this.refreshAsync()
+  }
 
-    }
+  findLineage(currentGen){
+    let lineage = []
+    let check = currentGen;
 
-    findLineage(currentGen){
-      let lineage = []
-      let check = currentGen;
-
-      this.state.categories.forEach(category => {
-        if(category.id === parseInt(check, 10)){
-          check = category.parent_id
-          lineage.push(category)
-          return
-        }
-      })
-      return lineage.reverse()
-    }
-
-    refreshAsync(){
-      this.getCategory();
-      this.getRecords();
-    }
-
-    componentDidMount() {
-      this.getCategory();
-      this.getRecords();
-    }
-
-    getCategory = () => {
-      fetch('/api/getCategories')
-      .then(res => res.json())
-      .then(
-        ({data}) =>
-        this.setState({
-          categories: data.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
-        })
-      );
-    }
-
-    getRecords = () => {
-      fetch('/api/getRecords')
-      .then(res => res.json())
-      .then(
-        ({data}) =>
-        this.setState({
-          records: data.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
-        })
-      );
-    }
-
-   render() {
-      console.log("Categories >>> render: this.state.parentId = ", this.state.parentId);
-      const filteredList = this.findLineage(this.state.parentId);
-      console.log("Categories >>> render: filteredList = ",filteredList);
-      let categoryList;
-      if(filteredList.length === 0) {
-        categoryList = <Helper key={-1} id={this.state.parentId} name={"Balance"}  />
-      } else {
-        categoryList = filteredList.map((category, index) => (
-          <Helper onClick={this.onItemClick} updateCurrentGen={this.updateCurrentGen} key={category.parent_id} id={category.parent_id} name={category.name}  />
-        ));
+    this.state.categories.forEach(category => {
+      if(category.id === parseInt(check, 10)){
+        check = category.parent_id
+        lineage.push(category)
+        return
       }
+    })
+    return lineage.reverse()
+  }
+
+  refreshAsync(){
+    this.getCategory();
+    this.getRecords();
+  }
+
+  componentDidMount() {
+    this.getCategory();
+    this.getRecords();
+  }
+
+  getCategory = () => {
+    fetch('/api/getCategories')
+    .then(res => res.json())
+    .then(
+      ({data}) =>
+      this.setState({
+        categories: data.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
+      })
+    );
+  }
+
+  getRecords = () => {
+    fetch('/api/getRecords')
+    .then(res => res.json())
+    .then(
+      ({data}) =>
+      this.setState({
+        records: data.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
+      })
+    );
+  }
+
+  render() {
+    const filteredList = this.findLineage(this.state.parentId);
+    let categoryList;
+    if(filteredList.length === 0) {
+      categoryList = <Helper key={-1} id={this.state.parentId} name={"Balance"}  />
+    } else {
+      categoryList = filteredList.map((category, index) => (
+        <Helper onClick={this.onItemClick} updateCurrentGen={this.updateCurrentGen} key={category.parent_id} id={category.parent_id} name={category.name}  />
+      ));
+    }
 
     return (
-    <div className="categoryPage">
-    <NavBar />
-      <div className='mostOuterContainer'>
-        <div className='topDiv'>
-          <div>
-            <span> {categoryList} </span>
+      <div className="categoryPage">
+        <NavBar />
+        <div className='mostOuterContainer'>
+          <div className='topDiv'>
+            <div>
+              <span> {categoryList} </span>
+            </div>
+            <div className="click">
+              <ModalCreateCategory name={this.state.parentName} parentCategory={this.state.parentId} update={this.refreshAsync.bind(this)}  />
+              <ModalCreateRecord name={this.state.parentName} parentCategory={this.state.parentId} update={this.refreshAsync.bind(this)}  />
+            </div>
           </div>
-          <div className="click">
-            <ModalCreateCategory name={this.state.parentName} parentCategory={this.state.parentId} update={this.refreshAsync.bind(this)}  />
-            <ModalCreateRecord name={this.state.parentName} parentCategory={this.state.parentId} update={this.refreshAsync.bind(this)}  />
-          </div>
+          <Category editShow={this.state.showCategoryOptions} toggleCategory={this.toggleCategory.bind(this)} updateCurrentGen={this.updateCurrentGen} state={this.state} update={this.refreshAsync.bind(this)} />
         </div>
-        <Category editShow={this.state.showCategoryOptions} toggleCategory={this.toggleCategory.bind(this)} updateCurrentGen={this.updateCurrentGen} state={this.state} update={this.refreshAsync.bind(this)} />
       </div>
-    </div>
     );
   }
 }

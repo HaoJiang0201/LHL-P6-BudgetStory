@@ -1,0 +1,97 @@
+/* Categories and Records Management Page */
+.ManagementPage
+{
+    display: inline-flex;
+    align-items: top;
+    background-color: white;
+    /* width: 100vw;
+    height: 100vh; */
+    background-image: url("../picture/Budget.jpg");
+}
+
+/* Left Side: Category Area */
+.CategoryControlBar
+{
+    display: inline-flex;
+    align-items: center;
+    background-color: lightskyblue;
+    width: 50vw;
+    height: 10vh;
+    /* box-shadow: inset 0 0 0 1.5px black; */
+    border: 2px solid black;
+    opacity: 0.9;
+}
+#back_btn
+{
+    margin-left: 20px;
+    margin-right:auto;
+    color: white;
+    font-weight: bold;
+    border: 1.5px solid white;
+    width: 100px;
+    height: 40px;
+    opacity: 0.8;
+}
+.category_title
+{
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: 8vw;
+}
+#new_category_btn
+{
+    margin-right: 20px;
+    margin-left:auto;
+    color: black;
+    font-weight: bold;
+    border: 1.5px solid black;
+    width: 100px;
+    height: 40px;
+}
+.CategoriesArea
+{
+    background-color: lightblue;
+    height: 90vh;
+    border: 2px solid black;
+    border-top:none;
+    opacity: 0.95;
+}
+
+/* Right Side: Record Area */
+.RecordControlBar
+{
+    display: inline-flex;
+    align-items: center;
+    background-color: lightblue;
+    width: 50vw;
+    height: 10vh;
+    border: 2px solid black;
+    border-left: none;
+    opacity: 0.95;
+}
+.record_title
+{
+    font-weight: bold;
+    margin-left: 20vw;
+    margin-right: auto;
+}
+#new_record_btn
+{
+    margin-right: 20px;
+    margin-left:auto;
+    color: black;
+    font-weight: bold;
+    border: 1.5px solid black;
+    width: 100px;
+    height: 40px;
+    opacity: 0.75;
+}
+.RecordsArea
+{
+    background-color: lightskyblue;
+    height: 90vh;
+    border: 2px solid black;
+    border-left: none;
+    border-top:none;
+    opacity: 0.9;
+}
