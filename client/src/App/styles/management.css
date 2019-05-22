@@ -4,9 +4,12 @@
     display: inline-flex;
     align-items: top;
     background-color: white;
-    /* width: 100vw;
-    height: 100vh; */
+    width: 100vw;
+    height: 100vh;
     background-image: url("../picture/Budget.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
 }
 
 /* Left Side: Category Area */
@@ -51,10 +54,68 @@
 .CategoriesArea
 {
     background-color: lightblue;
+    width: 50vw;
     height: 90vh;
     border: 2px solid black;
     border-top:none;
+    opacity: 0.9;
+    overflow:auto;
+}
+.category_item_list
+{
+    display: flex;
+    flex-flow: row wrap;
+    width: auto;
+    height:auto;
+    padding: 20px 0px 10px 10px;
+}
+.category_item
+{
+    /* background-color: white; */
+    background-image: url("../picture/CategoryFolder.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
     opacity: 0.95;
+    margin: 0px 10px 10px 10px;
+}
+.category_item_select
+{
+    border: 2px solid blue;
+    background-image: url("../picture/CategoryFolder.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    opacity: 0.95;
+    margin: 0px 10px 10px 10px;
+}
+.category_item:hover
+{
+    background-image: url("../picture/CategoryFolderHover.png");
+}
+
+.category_item_btn
+{
+    /* background-image: url("../picture/CategoryFolder.png"); */
+    background-color: none;
+}
+
+.category_text
+{
+    color:white;
+    font-weight: bold;
+    text-align: center;
+    /* margin-left: 12.5px;
+    margin-right: auto; */
+    width: 120px;
 }
 
 /* Right Side: Record Area */
@@ -89,7 +150,9 @@
 .RecordsArea
 {
     background-color: lightskyblue;
-    height: 90vh;
+    width: 50vw;
+    height: auto;
+    min-height: 90vh;
     border: 2px solid black;
     border-left: none;
     border-top:none;

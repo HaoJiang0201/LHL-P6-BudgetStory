@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import NewRecord from './NewRecord'
 import DateRange from './DateRange.js'
+import CategoryItem from './CategoryItem'
 import '../App/styles/management.css'
 import 'bootstrap/dist/css/bootstrap.css';
-import { Button, Badge, Modal, Form } from 'react-bootstrap';
+import { Button, Modal, Form } from 'react-bootstrap';
 import Navbar from './Navbar.js';
 
 class Management extends Component {
@@ -21,6 +22,14 @@ class Management extends Component {
 
   render() {
    
+    let categoryList = (<CategoryItem />);
+    let testArray = [];
+    for(let i = 0; i < 20; i ++) {
+      testArray.push(i);
+    }
+    categoryList = testArray.map((name, index) => (
+      <CategoryItem key={index} name={name}/>
+    ));
     return (
       <div>
         {/* <Navbar/> */}
@@ -36,7 +45,9 @@ class Management extends Component {
               </Button>
             </div>
             <div className="CategoriesArea">
-              Category List
+              <div className="category_item_list">
+                {categoryList}
+              </div>
             </div>
           </div>
           <div className="RecordList">
