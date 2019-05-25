@@ -157,10 +157,68 @@
 {
     background-color: lightskyblue;
     width: 50vw;
-    height: auto;
-    min-height: 90vh;
+    height: 90vh;
     border: 2px solid black;
     border-left: none;
     border-top:none;
+    overflow:auto;
     opacity: 0.95;
+}
+.record_item_list
+{
+    /* background-color: red; */
+    display: flex;
+    flex-flow: row wrap;
+    width: auto;
+    height:auto;
+    
+    /* padding: 20px 0px 10px 10px; */
+}
+.record_item
+{
+    background-color: white;    
+    width: 50vw;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    margin: 15px 15px 0px 15px;
+    opacity: 0.95;
+}
+.record_img
+{
+    background-image: url("../picture/Record.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-width: 90px;
+    min-height: 90px;
+    margin: 0px 10px 0px 10px;
+}
+.record_text
+{
+    color:black;
+    font-weight: bold;
+    text-align: left;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    grid-gap: 5px;
+    /* padding: 10px; */
+}
+.record_value
+{
+    grid-column: 1 / span 5;
+    min-width: 80px;
+    /* background-color: blue; */
+}
+.record_date
+{
+    text-align: right;
+    min-width: 80px;
+    /* background-color: aquamarine; */
+}
+.record_notes
+{
+    grid-column: 1 / span 6;
+    font-weight: normal;
+    /* background-color: red; */
 }

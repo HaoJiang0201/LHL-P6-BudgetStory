@@ -3,6 +3,7 @@ import axios from 'axios';
 import NewRecord from './NewRecord'
 import DateRange from './DateRange.js'
 import CategoryItem from './CategoryItem'
+import RecordItem from './RecordItem'
 import '../App/styles/management.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import { Button, Modal, Form } from 'react-bootstrap';
@@ -130,7 +131,8 @@ class Management extends Component {
     return (
       <div>
         {/* <Navbar/> */}
-        <div className="ManagementPage">
+        <div className="ManagementPage">    
+
           <div className="CategoryList">
             <div className="CategoryControlBar">
               { BackButton  }
@@ -153,9 +155,41 @@ class Management extends Component {
               </Button>
             </div>
             <div className="RecordsArea">
-              Record List
+              <div className="record_item_list">
+                <RecordItem
+                  key={1}
+                  id={1} value={100} date={"2019-01-01"} notes={'This is the notes of the record.This is the notes of the record.'}
+                  select={false}
+                  categorySelect={this.categorySelect.bind(this)}/>
+                <RecordItem
+                  key={1}
+                  id={1} value={100} date={"2019-01-01"} notes={'This is the notes of the record.This is the notes of the record.'}
+                  select={false}
+                  categorySelect={this.categorySelect.bind(this)}/>
+                <RecordItem
+                  key={1}
+                  id={1} value={100} date={"2019-01-01"} notes={'This is the notes of the record.This is the notes of the record.'}
+                  select={false}
+                  categorySelect={this.categorySelect.bind(this)}/>
+                <RecordItem
+                  key={1}
+                  id={1} value={100} date={"2019-01-01"} notes={'This is the notes of the record.This is the notes of the record.'}
+                  select={false}
+                  categorySelect={this.categorySelect.bind(this)}/>
+                <RecordItem
+                  key={1}
+                  id={1} value={100} date={"2019-01-01"} notes={'This is the notes of the record.This is the notes of the record.'}
+                  select={false}
+                  categorySelect={this.categorySelect.bind(this)}/>
+                <RecordItem
+                  key={1}
+                  id={1} value={100} date={"2019-01-01"} notes={'This is the notes of the record.This is the notes of the record.'}
+                  select={false}
+                  categorySelect={this.categorySelect.bind(this)}/>
+              </div>
             </div>
           </div>
+
         </div> 
       </div>
     );
