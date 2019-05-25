@@ -8,7 +8,9 @@ class CategoryItem extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        select: false
+        id: props.id,
+        name: props.name,
+        select: props.select
       }
     }
 
@@ -16,6 +18,14 @@ class CategoryItem extends Component {
         this.setState({
             select: true
         });
+        this.props.categorySelect(this.state.id);
+    }
+
+    onItemDoubleClick = () => {
+        this.setState({
+            select: true
+        });
+        this.props.categoryOpen(this.state.id, this.state.name);
     }
   
     componentDidMount() {
@@ -23,13 +33,11 @@ class CategoryItem extends Component {
     }
   
     render() {
-        let categoryItemClass = this.state.select ? "category_item_select" : "category_item";
+        let categoryItemClass = this.props.select ? "category_item_select" : "category_item";
+        let categoryName = this.props.name ? this.props.name: this.state.name;
         return (
-            <div className={categoryItemClass} onClick={this.onItemClick}>
-                {/* <Button className="category_item_btn" variant="outline-light" onClick={this.onItemClick}> */}
-                    <p className="category_text">分类名称{this.props.name}</p>
-                {/* </Button> */}
-          
+            <div className={categoryItemClass} onClick={this.onItemClick} onDoubleClick={this.onItemDoubleClick}>
+                <p className="category_text">{categoryName}</p>
             </div>
         );
     }

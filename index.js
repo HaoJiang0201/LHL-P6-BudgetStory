@@ -534,6 +534,15 @@ app.post('/api/editRecord', (req, res) => {
     {res.json(result)})
 });
 
+
+/******** Management Page Relevant ********/
+app.get('/api/GetSubCategories', (req,res) => {
+  knex.select().from('categories').where({parent_id: req.query.parent_id})
+  .then((results) => {
+    res.json({ results });
+  })
+});
+
 app.get('*', (req,res) =>{
 	res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
