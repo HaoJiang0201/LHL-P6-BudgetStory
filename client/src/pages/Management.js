@@ -15,8 +15,6 @@ class Management extends Component {
     this.state = {
       parentCategory: "Balance",
       parentID: 0,
-      grantParentCategory: "",
-      grandParentID: -1,
       categorySelect: 0,
       recordSelect: 0,
       subCategoryItems: [
@@ -35,7 +33,20 @@ class Management extends Component {
   }
 
   backButtonClick = () => {
-    this.getSubCategories(this.state.grandParentID, this.state.grantParentCategory);
+    axios('/api/GetParentCategory', {
+      params: {
+        id: this.state.parentID
+      }
+    })
+    .then(
+      ({data}) => {
+        this.getSubCategories(data.results[0].id, data.results[0].name);
+      }
+    ).catch(function (error) {
+      console.log(error);
+    });
+
+    
   }
 
   categorySelect = (id) => {
@@ -50,8 +61,6 @@ class Management extends Component {
   }
 
   getSubCategories = (parent_id, parent_name) => {
-    const grantParentID = this.state.subCategoryItems[0].parent_id;
-    const grantParentCategory = this.state.parentCategory;
     axios('/api/GetSubCategories', {
       params: {
         parent_id: parent_id
@@ -59,12 +68,11 @@ class Management extends Component {
     })
     .then(
       ({data}) => {
+
         this.setState({
           ...this.state,
           parentCategory: parent_name,
           parentID: parent_id,
-          grantParentCategory: grantParentCategory,
-          grandParentID: grantParentID,
           categorySelect: 0,
           recordSelect: 0,
           subCategoryItems: data.results
@@ -73,7 +81,6 @@ class Management extends Component {
     ).catch(function (error) {
       console.log(error);
     });
-
   }
 
   componentDidMount() {

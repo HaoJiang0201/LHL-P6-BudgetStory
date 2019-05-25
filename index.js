@@ -540,7 +540,18 @@ app.get('/api/GetSubCategories', (req,res) => {
   knex.select().from('categories').where({parent_id: req.query.parent_id})
   .then((results) => {
     res.json({ results });
-  })
+  });
+});
+
+app.get('/api/GetParentCategory', (req,res) => {
+  knex.select().from('categories').where({id: req.query.id})
+  .then((results) => {
+    let parentID = results[0].parent_id;
+    knex.select().from('categories').where({id: parentID})
+    .then((results) => {
+      res.json({ results });
+    });
+  });
 });
 
 app.get('*', (req,res) =>{
