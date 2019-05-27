@@ -539,7 +539,12 @@ app.post('/api/editRecord', (req, res) => {
 app.get('/api/GetSubCategories', (req,res) => {
   knex.select().from('categories').where({parent_id: req.query.parent_id})
   .then((results) => {
-    res.json({ results });
+    let categories = results;
+    knex.select().from('records').where({category_id: req.query.parent_id})
+    .then((results) => {
+      let records = results;
+      res.json({ categories: categories, records: records });
+    });
   });
 });
 

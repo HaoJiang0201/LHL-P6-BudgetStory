@@ -22,12 +22,28 @@ class Management extends Component {
         {
           id: 1,
           parent_id: 0,
-          name: "Expenses"
+          name: "Expenses0"
         },
         {
           id: 2,
           parent_id: 0,
-          name: "Incomes"
+          name: "Incomes0"
+        }
+      ],
+      subRecordItems: [
+        {
+          id: 1,
+          category_id: 0,
+          value: 100,
+          date: "2019-01-01",
+          notes: "Record 1"
+        },
+        {
+          id: 2,
+          category_id: 0,
+          value: 200,
+          date: "2019-01-02",
+          notes: "Record 2"
         }
       ]
     }
@@ -41,7 +57,11 @@ class Management extends Component {
     })
     .then(
       ({data}) => {
-        this.getSubCategories(data.results[0].id, data.results[0].name);
+        if(data.results.length === 0) {
+          this.getSubCategories(0, "Balance");
+        } else {
+          this.getSubCategories(data.results[0].id, data.results[0].name);
+        }
       }
     ).catch(function (error) {
       console.log(error);
@@ -76,11 +96,19 @@ class Management extends Component {
           parentID: parent_id,
           categorySelect: 0,
           recordSelect: 0,
-          subCategoryItems: data.results
+          subCategoryItems: data.categories,
+          subRecordItems: data.records
         });
       }
     ).catch(function (error) {
       console.log(error);
+    });
+  }
+
+  recordSelect = (id) => {
+    this.setState({
+      ...this.state,
+      recordSelect: id
     });
   }
 
@@ -111,6 +139,30 @@ class Management extends Component {
               select={false}
               categorySelect={this.categorySelect.bind(this)}
               categoryOpen={this.categoryOpen.bind(this)}/>
+          );
+        }                
+      })
+    );
+    const RecordItems = (
+
+      this.state.subRecordItems.map(record => {
+        let date = record.date.split('T')[0];
+        let value = record.value/100.0;
+        if(record.id === this.state.recordSelect) {
+          return (
+            <RecordItem 
+              key={record.id}
+              id={record.id} category_id={record.category_id} value={value} date={date} notes = {record.notes}
+              select={true}
+              recordSelect={this.recordSelect.bind(this)} />
+          );
+        } else {
+          return (
+            <RecordItem
+              key={record.id}
+              id={record.id} category_id={record.category_id} value={value} date={date} notes = {record.notes}
+              select={false}
+              recordSelect={this.recordSelect.bind(this)} />
           );
         }                
       })
@@ -146,6 +198,9 @@ class Management extends Component {
                 {CategoryItems}
               </div>
             </div>
+            <div className="CategoryBottomBar">
+              test
+            </div>
           </div>
           <div className="RecordList">
             <div className="RecordControlBar">
@@ -156,41 +211,15 @@ class Management extends Component {
             </div>
             <div className="RecordsArea">
               <div className="record_item_list">
-                <RecordItem
-                  key={1}
-                  id={1} value={100} date={"2019-01-01"} notes={'This is the notes of the record.This is the notes of the record.'}
-                  select={false}
-                  categorySelect={this.categorySelect.bind(this)}/>
-                <RecordItem
-                  key={1}
-                  id={1} value={100} date={"2019-01-01"} notes={'This is the notes of the record.This is the notes of the record.'}
-                  select={false}
-                  categorySelect={this.categorySelect.bind(this)}/>
-                <RecordItem
-                  key={1}
-                  id={1} value={100} date={"2019-01-01"} notes={'This is the notes of the record.This is the notes of the record.'}
-                  select={false}
-                  categorySelect={this.categorySelect.bind(this)}/>
-                <RecordItem
-                  key={1}
-                  id={1} value={100} date={"2019-01-01"} notes={'This is the notes of the record.This is the notes of the record.'}
-                  select={false}
-                  categorySelect={this.categorySelect.bind(this)}/>
-                <RecordItem
-                  key={1}
-                  id={1} value={100} date={"2019-01-01"} notes={'This is the notes of the record.This is the notes of the record.'}
-                  select={false}
-                  categorySelect={this.categorySelect.bind(this)}/>
-                <RecordItem
-                  key={1}
-                  id={1} value={100} date={"2019-01-01"} notes={'This is the notes of the record.This is the notes of the record.'}
-                  select={false}
-                  categorySelect={this.categorySelect.bind(this)}/>
+                {RecordItems}
               </div>
+            </div>
+            <div className="RecordBottomBar">
+              test
             </div>
           </div>
 
-        </div> 
+        </div>
       </div>
     );
   }

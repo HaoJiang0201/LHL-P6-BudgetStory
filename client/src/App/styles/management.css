@@ -1,7 +1,8 @@
 /* Categories and Records Management Page */
 .ManagementPage
 {
-    display: inline-flex;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
     align-items: top;
     background-color: white;
     width: 100vw;
@@ -9,7 +10,7 @@
     background-image: url("../picture/Budget.jpg");
     background-size: cover;
     background-position: center;
-    background-repeat: repeat;
+    /* background-repeat: repeat; */
 }
 
 /* Left Side: Category Area */
@@ -20,8 +21,10 @@
     background-color: lightskyblue;
     width: 50vw;
     height: 10vh;
-    /* box-shadow: inset 0 0 0 1.5px black; */
     border: 2px solid black;
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
     opacity: 0.95;
 }
 .back_btn
@@ -63,9 +66,9 @@
 {
     background-color: lightblue;
     width: 50vw;
-    height: 90vh;
+    height: 82vh;
     border: 2px solid black;
-    border-top:none;
+    border-left:none;
     overflow:auto;
     opacity: 0.95;
 }
@@ -79,7 +82,6 @@
 }
 .category_item
 {
-    /* background-color: white; */
     background-image: url("../picture/CategoryFolder.png");
     background-size: cover;
     background-position: center;
@@ -113,7 +115,6 @@
 {
     background-image: url("../picture/CategoryFolderHover.png");
 }
-
 .category_text
 {
     color:white;
@@ -122,6 +123,20 @@
     margin-left: 8px;
     margin-right: auto;
     width: 120px;
+}
+.CategoryBottomBar
+{
+    display: flex;
+    align-items: center;
+    background-color: lightslategray;
+    color: white;
+    width: 50vw;
+    height: 8vh;
+    border: 2px solid black;
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
+    opacity: 0.9;
 }
 
 /* Right Side: Record Area */
@@ -132,8 +147,6 @@
     background-color: lightblue;
     width: 50vw;
     height: 10vh;
-    border: 2px solid black;
-    border-left: none;
     opacity: 0.95;
 }
 .record_title
@@ -157,32 +170,48 @@
 {
     background-color: lightskyblue;
     width: 50vw;
-    height: 90vh;
+    height: 82vh;
     border: 2px solid black;
     border-left: none;
-    border-top:none;
+    border-right: none;
     overflow:auto;
     opacity: 0.95;
 }
 .record_item_list
 {
-    /* background-color: red; */
     display: flex;
     flex-flow: row wrap;
     width: auto;
     height:auto;
-    
-    /* padding: 20px 0px 10px 10px; */
 }
 .record_item
 {
-    background-color: white;    
+    /* background-color: white;     */
+    border: 2px solid grey;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     width: 50vw;
-    height: 90px;
+    min-height: 60px;
     display: flex;
     align-items: center;
-    margin: 15px 15px 0px 15px;
+    margin: 10px 10px 0px 10px;
     opacity: 0.95;
+}
+.record_item:hover
+{
+    border: 2px solid grey;
+    opacity: 1;
+}
+.record_item_select
+{
+    border: 2px solid black;
+    width: 50vw;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    margin: 10px 10px 0px 10px;
+    opacity: 1;
 }
 .record_img
 {
@@ -190,9 +219,9 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-width: 90px;
-    min-height: 90px;
-    margin: 0px 10px 0px 10px;
+    min-width: 50px;
+    min-height: 50px;
+    margin: 0px 5px 0px 5px;
 }
 .record_text
 {
@@ -200,25 +229,35 @@
     font-weight: bold;
     text-align: left;
     display: grid;
-    grid-template-columns: auto auto auto auto auto auto;
+    grid-template-columns: auto auto auto;
     grid-gap: 5px;
-    /* padding: 10px; */
 }
 .record_value
 {
-    grid-column: 1 / span 5;
+    /* background-color: orange; */
     min-width: 80px;
-    /* background-color: blue; */
 }
 .record_date
 {
+    /* background-color: blue; */
     text-align: right;
-    min-width: 80px;
-    /* background-color: aquamarine; */
+    min-width: 100px;
 }
 .record_notes
 {
-    grid-column: 1 / span 6;
-    font-weight: normal;
     /* background-color: red; */
+    grid-column: 1 / span 2;
+    font-weight: normal;
+    min-width: 180px;
+    
+}
+.RecordBottomBar
+{
+    display: flex;
+    align-items: center;
+    background-color: lightslategray;
+    color: white;
+    width: 50vw;
+    height: 8vh;
+    opacity: 0.9;
 }

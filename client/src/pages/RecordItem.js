@@ -9,6 +9,7 @@ class RecordItem extends Component {
       super(props);
       this.state = {
         id: props.id,
+        category_id: props.category_id,
         value: props.value,
         date: props.date,
         notes: props.notes,
@@ -20,7 +21,7 @@ class RecordItem extends Component {
         this.setState({
             select: true
         });
-        // this.props.recordSelect(this.state.id);
+        this.props.recordSelect(this.state.id);
     }
   
     componentDidMount() {

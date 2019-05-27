@@ -33,6 +33,7 @@ class CategoryItem extends Component {
     }
   
     render() {
+
         let categoryItemClass = this.props.select ? "category_item_select" : "category_item";
         let categoryName = this.props.name ? this.props.name: this.state.name;
         return (
