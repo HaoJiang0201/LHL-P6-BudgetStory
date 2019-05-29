@@ -1,3 +1,57 @@
+/* Buttons and Images */
+.control_button
+{
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+    margin-left: auto;
+    color: black;
+    font-weight: bold;
+    border: 1.5px solid black;
+    min-width: 90px;
+    height: 40px;
+}
+.control_button:hover
+{
+    border: 1.5px solid white;
+}
+.control_button_image
+{
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    opacity: 0.75;
+}
+.control_button:hover .control_button_image {
+    opacity: 1;
+}
+#new_button_image
+{
+    background-image: url("../picture/New.png"); 
+}
+#edit_button_image
+{
+    background-image: url("../picture/Edit.png");
+}
+#delete_button_image
+{
+    background-image: url("../picture/Delete.png");
+}
+#copy_button_image
+{
+    background-image: url("../picture/Copy.png");
+}
+#cut_button_image
+{
+    background-image: url("../picture/Cut.png");
+}
+#paste_button_image
+{
+    background-image: url("../picture/Paste.png");
+}
+
 /* Categories and Records Management Page */
 .ManagementPage
 {
@@ -50,17 +104,7 @@
 {
     font-weight: bold;
     margin-left: auto;
-    margin-right: 8vw;
-}
-#new_category_btn
-{
-    margin-right: 20px;
-    margin-left:auto;
-    color: black;
-    font-weight: bold;
-    border: 1.5px solid black;
-    width: 100px;
-    height: 40px;
+    margin-right: 22.5vw;
 }
 .CategoriesArea
 {
@@ -132,11 +176,7 @@
     color: white;
     width: 50vw;
     height: 8vh;
-    border: 2px solid black;
-    border-top: none;
-    border-left: none;
-    border-bottom: none;
-    opacity: 0.9;
+    opacity: 0.95;
 }
 
 /* Right Side: Record Area */
@@ -144,7 +184,7 @@
 {
     display: inline-flex;
     align-items: center;
-    background-color: lightblue;
+    background-color: lightskyblue;
     width: 50vw;
     height: 10vh;
     opacity: 0.95;
@@ -157,18 +197,22 @@
 }
 #new_record_btn
 {
+    display: flex;
+    align-items: center;
     margin-right: 20px;
     margin-left:auto;
     color: black;
     font-weight: bold;
     border: 1.5px solid black;
-    width: 100px;
+    min-width: 90px;
     height: 40px;
-    opacity: 0.95;
+}
+#new_record_btn:hover .new_button_image {
+    opacity: 1;
 }
 .RecordsArea
 {
-    background-color: lightskyblue;
+    background-color:lightblue; 
     width: 50vw;
     height: 82vh;
     border: 2px solid black;
@@ -186,7 +230,6 @@
 }
 .record_item
 {
-    /* background-color: white;     */
     border: 2px solid grey;
     border-top: none;
     border-left: none;
@@ -221,7 +264,7 @@
     background-repeat: no-repeat;
     min-width: 50px;
     min-height: 50px;
-    margin: 0px 5px 0px 5px;
+    margin: 0px 15px 0px 5px;
 }
 .record_text
 {
@@ -259,5 +302,5 @@
     color: white;
     width: 50vw;
     height: 8vh;
-    opacity: 0.9;
+    opacity: 0.95;
 }

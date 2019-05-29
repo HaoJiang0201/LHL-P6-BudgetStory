@@ -6,7 +6,7 @@ import CategoryItem from './CategoryItem'
 import RecordItem from './RecordItem'
 import '../App/styles/management.css'
 import 'bootstrap/dist/css/bootstrap.css';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Image, Button, Modal, Form } from 'react-bootstrap';
 import Navbar from './Navbar.js';
 
 class Management extends Component {
@@ -22,12 +22,12 @@ class Management extends Component {
         {
           id: 1,
           parent_id: 0,
-          name: "Expenses0"
+          name: "Expenses"
         },
         {
           id: 2,
           parent_id: 0,
-          name: "Incomes0"
+          name: "Incomes"
         }
       ],
       subRecordItems: [
@@ -112,6 +112,19 @@ class Management extends Component {
     });
   }
 
+  newCategory = () => {
+    console.log("New Category Button Clicked!");
+  }
+  newRecord = () => {
+    console.log("New Record Button Clicked!");
+  }
+  editCategory = () => {
+    console.log("Edit Category Button Clicked!");
+  }
+  editRecord = () => {
+    console.log("Edit Record Button Clicked!");
+  }
+
   componentDidMount() {
     this.getSubCategories(0, "Balance");
   }
@@ -189,9 +202,6 @@ class Management extends Component {
             <div className="CategoryControlBar">
               { BackButton  }
               <h5 className="category_title" variant="secondary">{this.state.parentCategory}</h5>
-              <Button id="new_category_btn" variant="info" onClick={this.handleShow}>
-                new
-              </Button>
             </div>
             <div className="CategoriesArea">
               <div className="category_item_list">
@@ -199,15 +209,20 @@ class Management extends Component {
               </div>
             </div>
             <div className="CategoryBottomBar">
-              test
+              <Button className="control_button" variant="info" onClick={this.newCategory}>
+                <div className="control_button_image" id="new_button_image"></div>New
+              </Button>
+              <Button className="control_button" variant="info" onClick={this.editCategory}>
+                <div className="control_button_image" id="edit_button_image"></div>Edit
+              </Button>
+              <Button className="control_button" variant="info" onClick={this.deleteCategory}>
+                <div className="control_button_image" id="delete_button_image"></div>Delete
+              </Button>
             </div>
           </div>
           <div className="RecordList">
             <div className="RecordControlBar">
               <h5 className="record_title" variant="secondary">Record List</h5>
-              <Button id="new_record_btn" variant="info" onClick={this.handleShow}>
-                new
-              </Button>
             </div>
             <div className="RecordsArea">
               <div className="record_item_list">
@@ -215,10 +230,17 @@ class Management extends Component {
               </div>
             </div>
             <div className="RecordBottomBar">
-              test
+              <Button className="control_button" variant="info" onClick={this.newCategory}>
+                <div className="control_button_image" id="copy_button_image"></div>Copy
+              </Button>
+              <Button className="control_button" variant="info" onClick={this.editCategory}>
+                <div className="control_button_image" id="cut_button_image"></div>Cut
+              </Button>
+              <Button className="control_button" variant="info" onClick={this.deleteCategory}>
+                <div className="control_button_image" id="paste_button_image"></div>Paste
+              </Button>
             </div>
           </div>
-
         </div>
       </div>
     );
