@@ -49,9 +49,13 @@ class Management extends Component {
       filterYear: "2019",
       filterMonth: "05"
     }
+    this.date = new Date().toISOString().split('T')[0];
+    
+    this.selectYear = this.date.split('-')[0];
+    this.selectMonth = this.date.split('-')[1];
 
-    this.selectYear = "2019";
-    this.selectMonth = "05;"
+    console.log("selectYear = ", this.selectYear);
+    console.log("selectMonth = ", this.selectMonth);
   }
 
   backButtonClick = () => {
@@ -230,7 +234,10 @@ class Management extends Component {
 
           <div className="CategoryList">
             <div className="CategoryControlBar">
-              <h5 className="category_record_title" variant="secondary">{this.state.parentCategory}</h5>
+              <h5 className="category_record_title" variant="secondary">
+                {this.state.parentCategory}
+                <div className="category_record_title_icon category_imgage"></div>
+              </h5>
               { BackButton  }
             </div>
             <div className="CategoriesArea">
@@ -252,16 +259,23 @@ class Management extends Component {
           </div>
           <div className="RecordList">
             <div className="RecordControlBar">
-              <h5 className="category_record_title" variant="secondary">Records</h5>
+              <h5 className="category_record_title" variant="secondary">
+                Records
+                <div className="category_record_title_icon record_image"></div>
+              </h5>
               <div className="time_selector_area">
                 <h6 className="time_label">Year: </h6>
-                <select className="time_selector" defaultValue="2019" onChange={this.yearChange}>
+                <select className="time_selector" defaultValue={this.selectYear} onChange={this.yearChange}>
+                  <option value="2020">2022</option>
+                  <option value="2020">2021</option>
                   <option value="2020">2020</option>
                   <option value="2019">2019</option>
                   <option value="2018">2018</option>
+                  <option value="2018">2017</option>
+                  <option value="2018">2016</option>
                 </select>
                 <h6 className="time_label">Month: </h6>
-                <select className="time_selector" defaultValue="05" onChange={this.monthChange}>
+                <select className="time_selector" defaultValue={this.selectMonth} onChange={this.monthChange}>
                   <option value="12">Dec</option>
                   <option value="11">Nov</option>
                   <option value="10">Oct</option>
