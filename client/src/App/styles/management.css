@@ -27,6 +27,27 @@
 .control_button:hover .control_button_image {
     opacity: 1;
 }
+.back_btn
+{
+    margin-left: auto;
+    margin-right: 20px;
+}
+.back_btn_empty
+{
+    margin-left: auto;
+    margin-right: 20px;
+    width: 100px;
+    height: 40px;
+    opacity: 0.95;
+}
+#back_button_image
+{
+    background-image: url("../picture/Back.png"); 
+}  
+#update_button_image
+{
+    background-image: url("../picture/Update.png"); 
+}
 #new_button_image
 {
     background-image: url("../picture/New.png"); 
@@ -81,30 +102,11 @@
     border-bottom: none;
     opacity: 0.95;
 }
-.back_btn
-{
-    margin-left: 20px;
-    margin-right:auto;
-    color: white;
-    font-weight: bold;
-    border: 1.5px solid white;
-    width: 100px;
-    height: 40px;
-    opacity: 0.95;
-}
-.back_btn_empty
-{
-    margin-left: 20px;
-    margin-right:auto;
-    width: 100px;
-    height: 40px;
-    opacity: 0.95;
-}
-.category_title
+.category_record_title
 {
     font-weight: bold;
-    margin-left: auto;
-    margin-right: 22.5vw;
+    min-width: 100px;
+    margin:10px auto 10px 30px;
 }
 .CategoriesArea
 {
@@ -189,25 +191,40 @@
     height: 10vh;
     opacity: 0.95;
 }
-.record_title
+.time_selector_area
+{
+    display: inline-flex;
+    align-items: center;
+    margin: 0px 20px 0px 0px;
+}
+.time_label
 {
     font-weight: bold;
-    margin-left: 20vw;
-    margin-right: auto;
-}
-#new_record_btn
-{
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-    margin-left:auto;
     color: black;
+    margin-top: 10px;
+}
+.time_selector
+{
+    background-color: grey;
+    color: white;
     font-weight: bold;
     border: 1.5px solid black;
-    min-width: 90px;
+    text-align: center;
+    text-align-last: center;
+    margin-left: 10px;
+    margin-right: 20px;
+    border-radius: 5px;
+    outline: none;
+    width: 80px;
     height: 40px;
+    opacity: 0.9;
 }
-#new_record_btn:hover .new_button_image {
+.time_selector:hover
+{
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+    border: 1.5px solid white;
     opacity: 1;
 }
 .RecordsArea

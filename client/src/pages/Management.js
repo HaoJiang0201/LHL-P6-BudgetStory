@@ -6,7 +6,7 @@ import CategoryItem from './CategoryItem'
 import RecordItem from './RecordItem'
 import '../App/styles/management.css'
 import 'bootstrap/dist/css/bootstrap.css';
-import { Image, Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal, Form } from 'react-bootstrap';
 import Navbar from './Navbar.js';
 
 class Management extends Component {
@@ -19,34 +19,39 @@ class Management extends Component {
       categorySelect: 0,
       recordSelect: 0,
       subCategoryItems: [
-        {
-          id: 1,
-          parent_id: 0,
-          name: "Expenses"
-        },
-        {
-          id: 2,
-          parent_id: 0,
-          name: "Incomes"
-        }
+        // {
+        //   id: 1,
+        //   parent_id: 0,
+        //   name: "Expenses"
+        // },
+        // {
+        //   id: 2,
+        //   parent_id: 0,
+        //   name: "Incomes"
+        // }
       ],
       subRecordItems: [
-        {
-          id: 1,
-          category_id: 0,
-          value: 100,
-          date: "2019-01-01",
-          notes: "Record 1"
-        },
-        {
-          id: 2,
-          category_id: 0,
-          value: 200,
-          date: "2019-01-02",
-          notes: "Record 2"
-        }
-      ]
+        // {
+        //   id: 1,
+        //   category_id: 0,
+        //   value: 100,
+        //   date: "2019-01-01",
+        //   notes: "Record 1"
+        // },
+        // {
+        //   id: 2,
+        //   category_id: 0,
+        //   value: 200,
+        //   date: "2019-01-02",
+        //   notes: "Record 2"
+        // }
+      ],
+      filterYear: "2019",
+      filterMonth: "05"
     }
+
+    this.selectYear = "2019";
+    this.selectMonth = "05;"
   }
 
   backButtonClick = () => {
@@ -66,8 +71,27 @@ class Management extends Component {
     ).catch(function (error) {
       console.log(error);
     });
+  }
 
+  yearChange = (event) => {
+    console.log("Year Change! ", event.target.value);
+    this.selectYear = event.target.value;
     
+  }
+
+  monthChange = (event) => {
+    console.log("Month Change! ", event.target.value);
+    this.selectMonth = event.target.value;
+  }
+
+  updateButtonClick = (event) => {
+    console.log("Update Button Clicked!");
+    console.log("Year = " + this.selectYear + ", Month = " + this.selectMonth);
+    this.setState({
+      ...this.state,
+      filterYear: this.selectYear,
+      filterMonth: this.selectMonth
+    });
   }
 
   categorySelect = (id) => {
@@ -112,17 +136,23 @@ class Management extends Component {
     });
   }
 
-  newCategory = () => {
-    console.log("New Category Button Clicked!");
+  newCategoryRecord = () => {
+    console.log("New Button Clicked!");
   }
-  newRecord = () => {
-    console.log("New Record Button Clicked!");
+  editCategoryRecord = () => {
+    console.log("Edit Button Clicked!");
   }
-  editCategory = () => {
-    console.log("Edit Category Button Clicked!");
+  deleteCategoryRecord = () => {
+    console.log("Delete Button Clicked!");
   }
-  editRecord = () => {
-    console.log("Edit Record Button Clicked!");
+  copyCategoryRecord = () => {
+    console.log("Copy Button Clicked!");
+  }
+  cutCategoryRecord = () => {
+    console.log("Cut Button Clicked!");
+  }
+  pasteCategoryRecord = () => {
+    console.log("Paste Button Clicked!");
   }
 
   componentDidMount() {
@@ -182,8 +212,8 @@ class Management extends Component {
     );
 
     let BackButton = (
-      <Button className="back_btn" variant="secondary" onClick={this.backButtonClick}>
-        {'<< Back'}
+      <Button className="control_button back_btn" variant="info" onClick={this.backButtonClick}>
+        <div className="control_button_image" id="back_button_image"></div>Back
       </Button>
     );
 
@@ -200,8 +230,8 @@ class Management extends Component {
 
           <div className="CategoryList">
             <div className="CategoryControlBar">
+              <h5 className="category_record_title" variant="secondary">{this.state.parentCategory}</h5>
               { BackButton  }
-              <h5 className="category_title" variant="secondary">{this.state.parentCategory}</h5>
             </div>
             <div className="CategoriesArea">
               <div className="category_item_list">
@@ -209,20 +239,46 @@ class Management extends Component {
               </div>
             </div>
             <div className="CategoryBottomBar">
-              <Button className="control_button" variant="info" onClick={this.newCategory}>
+              <Button className="control_button" variant="info" onClick={this.newCategoryRecord}>
                 <div className="control_button_image" id="new_button_image"></div>New
               </Button>
-              <Button className="control_button" variant="info" onClick={this.editCategory}>
+              <Button className="control_button" variant="info" onClick={this.editCategoryRecord}>
                 <div className="control_button_image" id="edit_button_image"></div>Edit
               </Button>
-              <Button className="control_button" variant="info" onClick={this.deleteCategory}>
+              <Button className="control_button" variant="info" onClick={this.deleteCategoryRecord}>
                 <div className="control_button_image" id="delete_button_image"></div>Delete
               </Button>
             </div>
           </div>
           <div className="RecordList">
             <div className="RecordControlBar">
-              <h5 className="record_title" variant="secondary">Record List</h5>
+              <h5 className="category_record_title" variant="secondary">Records</h5>
+              <div className="time_selector_area">
+                <h6 className="time_label">Year: </h6>
+                <select className="time_selector" defaultValue="2019" onChange={this.yearChange}>
+                  <option value="2020">2020</option>
+                  <option value="2019">2019</option>
+                  <option value="2018">2018</option>
+                </select>
+                <h6 className="time_label">Month: </h6>
+                <select className="time_selector" defaultValue="05" onChange={this.monthChange}>
+                  <option value="12">Dec</option>
+                  <option value="11">Nov</option>
+                  <option value="10">Oct</option>
+                  <option value="09">Sep</option>
+                  <option value="08">Aug</option>
+                  <option value="07">Jul</option>
+                  <option value="06">Jun</option>
+                  <option value="05">May</option>
+                  <option value="04">Apr</option>
+                  <option value="03">Mar</option>
+                  <option value="02">Feb</option>
+                  <option value="01">Jan</option>
+                </select>
+                <Button className="control_button" variant="info" onClick={this.updateButtonClick}>
+                  <div className="control_button_image" id="update_button_image"></div>Update
+                </Button>
+              </div>
             </div>
             <div className="RecordsArea">
               <div className="record_item_list">
@@ -230,13 +286,13 @@ class Management extends Component {
               </div>
             </div>
             <div className="RecordBottomBar">
-              <Button className="control_button" variant="info" onClick={this.newCategory}>
+              <Button className="control_button" variant="info" onClick={this.copyCategoryRecord}>
                 <div className="control_button_image" id="copy_button_image"></div>Copy
               </Button>
-              <Button className="control_button" variant="info" onClick={this.editCategory}>
+              <Button className="control_button" variant="info" onClick={this.cutCategoryRecord}>
                 <div className="control_button_image" id="cut_button_image"></div>Cut
               </Button>
-              <Button className="control_button" variant="info" onClick={this.deleteCategory}>
+              <Button className="control_button" variant="info" onClick={this.pasteCategoryRecord}>
                 <div className="control_button_image" id="paste_button_image"></div>Paste
               </Button>
             </div>
