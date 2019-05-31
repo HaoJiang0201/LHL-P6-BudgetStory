@@ -8,6 +8,7 @@ import '../App/styles/management.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import { Button, Modal, Form } from 'react-bootstrap';
 import Navbar from './Navbar.js';
+import CreateNewModal from './CreateNewModal.js';
 
 class Management extends Component {
 
@@ -46,16 +47,13 @@ class Management extends Component {
         //   notes: "Record 2"
         // }
       ],
-      filterYear: "2019",
-      filterMonth: "05"
+      createNewShow: false
     }
     this.date = new Date().toISOString().split('T')[0];
-    
     this.selectYear = this.date.split('-')[0];
     this.selectMonth = this.date.split('-')[1];
-
-    console.log("selectYear = ", this.selectYear);
-    console.log("selectMonth = ", this.selectMonth);
+    this.filterYear = this.selectYear;
+    this.filterMonth = this.selectMonth;
   }
 
   backButtonClick = () => {
@@ -78,24 +76,17 @@ class Management extends Component {
   }
 
   yearChange = (event) => {
-    console.log("Year Change! ", event.target.value);
     this.selectYear = event.target.value;
-    
   }
 
   monthChange = (event) => {
-    console.log("Month Change! ", event.target.value);
     this.selectMonth = event.target.value;
   }
 
-  updateButtonClick = (event) => {
-    console.log("Update Button Clicked!");
-    console.log("Year = " + this.selectYear + ", Month = " + this.selectMonth);
-    this.setState({
-      ...this.state,
-      filterYear: this.selectYear,
-      filterMonth: this.selectMonth
-    });
+  updateButtonClick = () => {
+    this.filterYear = this.selectYear;
+    this.filterMonth = this.selectMonth;
+    this.getSubCategories(this.state.parentID, this.state.parentCategory);
   }
 
   categorySelect = (id) => {
@@ -109,15 +100,38 @@ class Management extends Component {
     this.getSubCategories(id, name);
   }
 
+  endOfMonth (month) {
+    let endDay = "";
+    switch(month) {
+      case "01": endDay = "31"; break;
+      case "02": endDay = "28"; break;
+      case "03": endDay = "31"; break;
+      case "04": endDay = "30"; break;
+      case "05": endDay = "31"; break;
+      case "06": endDay = "30"; break;
+      case "07": endDay = "31"; break;
+      case "08": endDay = "31"; break;
+      case "09": endDay = "30"; break;
+      case "10": endDay = "31"; break;
+      case "11": endDay = "30"; break;
+      case "12": endDay = "31"; break;
+      default  : endDay = "31"; break;
+    }
+    return endDay;
+  }
+
   getSubCategories = (parent_id, parent_name) => {
+    let start = this.filterYear + "-" + this.filterMonth + "-01";
+    let end = this.filterYear + "-" + this.filterMonth + "-" + this.endOfMonth(this.filterMonth);
     axios('/api/GetSubCategories', {
       params: {
-        parent_id: parent_id
+        parent_id: parent_id,
+        start: start,
+        end:end
       }
     })
     .then(
       ({data}) => {
-
         this.setState({
           ...this.state,
           parentCategory: parent_name,
@@ -141,8 +155,23 @@ class Management extends Component {
   }
 
   newCategoryRecord = () => {
-    console.log("New Button Clicked!");
+    this.setState({
+      ...this.state,
+      createNewShow: true
+    });
   }
+
+  newDlgClose = () => {
+    this.setState({
+      ...this.state,
+      createNewShow: false
+    });
+  }
+
+  updateNewCategory = () => {
+    this.getSubCategories(this.state.parentID, this.state.parentCategory);
+  }
+
   editCategoryRecord = () => {
     console.log("Edit Button Clicked!");
   }
@@ -249,6 +278,10 @@ class Management extends Component {
               <Button className="control_button" variant="info" onClick={this.newCategoryRecord}>
                 <div className="control_button_image" id="new_button_image"></div>New
               </Button>
+              <CreateNewModal createNewShow={this.state.createNewShow}
+                parentID={this.state.parentID} parentCategory={this.state.parentCategory}
+                updateNewCategory={(this.updateNewCategory.bind(this))}
+                newDlgClose={this.newDlgClose.bind(this)} />
               <Button className="control_button" variant="info" onClick={this.editCategoryRecord}>
                 <div className="control_button_image" id="edit_button_image"></div>Edit
               </Button>
@@ -264,7 +297,7 @@ class Management extends Component {
                 <div className="category_record_title_icon record_image"></div>
               </h5>
               <div className="time_selector_area">
-                <h6 className="time_label">Year: </h6>
+                {/* <h6 className="time_label">Year</h6> */}
                 <select className="time_selector" defaultValue={this.selectYear} onChange={this.yearChange}>
                   <option value="2020">2022</option>
                   <option value="2020">2021</option>
@@ -274,7 +307,7 @@ class Management extends Component {
                   <option value="2018">2017</option>
                   <option value="2018">2016</option>
                 </select>
-                <h6 className="time_label">Month: </h6>
+                {/* <h6 className="time_label">Month</h6> */}
                 <select className="time_selector" defaultValue={this.selectMonth} onChange={this.monthChange}>
                   <option value="12">Dec</option>
                   <option value="11">Nov</option>

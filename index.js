@@ -541,6 +541,7 @@ app.get('/api/GetSubCategories', (req,res) => {
   .then((results) => {
     let categories = results;
     knex.select().from('records').where({category_id: req.query.parent_id})
+    .andWhere('date', '>=', req.query.start).andWhere('date', '<=', req.query.end)
     .then((results) => {
       let records = results;
       res.json({ categories: categories, records: records });
