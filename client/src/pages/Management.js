@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Button, Modal, Form } from 'react-bootstrap';
 import Navbar from './Navbar.js';
 import CreateNewModal from './CreateNewModal.js';
+import { dateFormat } from 'highcharts';
 
 class Management extends Component {
 
@@ -52,8 +53,8 @@ class Management extends Component {
     this.date = new Date().toISOString().split('T')[0];
     this.selectYear = this.date.split('-')[0];
     this.selectMonth = this.date.split('-')[1];
-    this.filterYear = this.selectYear;
-    this.filterMonth = this.selectMonth;
+    // this.filterYear = this.selectYear;
+    // this.filterMonth = this.selectMonth;
   }
 
   backButtonClick = () => {
@@ -77,22 +78,25 @@ class Management extends Component {
 
   yearChange = (event) => {
     this.selectYear = event.target.value;
+    this.getSubCategories(this.state.parentID, this.state.parentCategory);
   }
 
   monthChange = (event) => {
     this.selectMonth = event.target.value;
-  }
-
-  updateButtonClick = () => {
-    this.filterYear = this.selectYear;
-    this.filterMonth = this.selectMonth;
     this.getSubCategories(this.state.parentID, this.state.parentCategory);
   }
+
+  // updateButtonClick = () => {
+  //   // this.filterYear = this.selectYear;
+  //   // this.filterMonth = this.selectMonth;
+  //   this.getSubCategories(this.state.parentID, this.state.parentCategory);
+  // }
 
   categorySelect = (id) => {
     this.setState({
       ...this.state,
-      categorySelect: id
+      categorySelect: id,
+      recordSelect: 0
     });
   }
 
@@ -121,8 +125,8 @@ class Management extends Component {
   }
 
   getSubCategories = (parent_id, parent_name) => {
-    let start = this.filterYear + "-" + this.filterMonth + "-01";
-    let end = this.filterYear + "-" + this.filterMonth + "-" + this.endOfMonth(this.filterMonth);
+    let start = this.selectYear + "-" + this.selectMonth + "-01";
+    let end = this.selectYear + "-" + this.selectMonth + "-" + this.endOfMonth(this.selectMonth);
     axios('/api/GetSubCategories', {
       params: {
         parent_id: parent_id,
@@ -150,15 +154,20 @@ class Management extends Component {
   recordSelect = (id) => {
     this.setState({
       ...this.state,
+      categorySelect: 0,
       recordSelect: id
     });
   }
 
   newCategoryRecord = () => {
-    this.setState({
-      ...this.state,
-      createNewShow: true
-    });
+    if(this.state.parentID === 0) {
+      alert("Please create new Category or Record in Expenses or Incomes.");
+    } else {
+      this.setState({
+        ...this.state,
+        createNewShow: true
+      });
+    }
   }
 
   newDlgClose = () => {
@@ -168,15 +177,58 @@ class Management extends Component {
     });
   }
 
-  updateNewCategory = () => {
+  updateNewCategoryRecord = (date) => {
+    if(date != "category") {
+      this.selectYear = date.split('-')[0];
+      this.selectMonth = date.split('-')[1];
+      // this.filterYear = this.selectYear;
+      // this.filterMonth = this.selectMonth;
+    }
+    else {
+      console.log("no need to change date selectors.");
+    }
     this.getSubCategories(this.state.parentID, this.state.parentCategory);
   }
 
   editCategoryRecord = () => {
-    console.log("Edit Button Clicked!");
+    if(this.state.categorySelect === 0 && this.state.recordSelect === 0) {
+      alert("Please select a Category or Record to Edit.");
+    } else {
+      if(this.state.categorySelect === 1 || this.state.categorySelect === 2) {
+        alert("Expenses and Incomes are default parent category which cannot be Edit.");
+      } else {
+        if(this.state.categorySelect != 0) {
+          console.log("select category = ", this.state.categorySelect);
+        }
+        if(this.state.recordSelect != 0) {
+          console.log("select record = ", this.state.recordSelect);
+        }
+      }
+    }
   }
   deleteCategoryRecord = () => {
-    console.log("Delete Button Clicked!");
+    if(this.state.categorySelect === 0 && this.state.recordSelect === 0) {
+      alert("Please select a Category or Record to Delete.");
+    } else {
+      if(this.state.categorySelect === 1 || this.state.categorySelect === 2) {
+        alert("Expenses and Incomes are default parent category which cannot be Deleted.");
+      } else {
+        if(this.state.categorySelect != 0) {
+          console.log("select category = ", this.state.categorySelect);
+        }
+        if(this.state.recordSelect != 0) {
+          console.log("select record = ", this.state.recordSelect);
+          // const delRec = {
+          //   id: this.state.recordSelect
+          // }
+          // axios.post('/api/deleteRecord', {delRec}).then((response) => {
+          //   console.log('Record Deleted!')
+          //   this.props.update()
+          //   this.handleClose();
+          // })
+        }
+      }
+    }
   }
   copyCategoryRecord = () => {
     console.log("Copy Button Clicked!");
@@ -263,7 +315,7 @@ class Management extends Component {
 
           <div className="CategoryList">
             <div className="CategoryControlBar">
-              <h5 className="category_record_title" variant="secondary">
+              <h5 className="category_record_title disable-selection" variant="secondary">
                 {this.state.parentCategory}
                 <div className="category_record_title_icon category_imgage"></div>
               </h5>
@@ -280,7 +332,7 @@ class Management extends Component {
               </Button>
               <CreateNewModal createNewShow={this.state.createNewShow}
                 parentID={this.state.parentID} parentCategory={this.state.parentCategory}
-                updateNewCategory={(this.updateNewCategory.bind(this))}
+                updateNewCategoryRecord={(this.updateNewCategoryRecord.bind(this))}
                 newDlgClose={this.newDlgClose.bind(this)} />
               <Button className="control_button" variant="info" onClick={this.editCategoryRecord}>
                 <div className="control_button_image" id="edit_button_image"></div>Edit
@@ -292,13 +344,13 @@ class Management extends Component {
           </div>
           <div className="RecordList">
             <div className="RecordControlBar">
-              <h5 className="category_record_title" variant="secondary">
+              <h5 className="category_record_title disable-selection" variant="secondary">
                 Records
                 <div className="category_record_title_icon record_image"></div>
               </h5>
               <div className="time_selector_area">
                 {/* <h6 className="time_label">Year</h6> */}
-                <select className="time_selector" defaultValue={this.selectYear} onChange={this.yearChange}>
+                <select className="time_selector" value={this.selectYear} onChange={this.yearChange}>
                   <option value="2020">2022</option>
                   <option value="2020">2021</option>
                   <option value="2020">2020</option>
@@ -308,7 +360,7 @@ class Management extends Component {
                   <option value="2018">2016</option>
                 </select>
                 {/* <h6 className="time_label">Month</h6> */}
-                <select className="time_selector" defaultValue={this.selectMonth} onChange={this.monthChange}>
+                <select className="time_selector" value={this.selectMonth} onChange={this.monthChange}>
                   <option value="12">Dec</option>
                   <option value="11">Nov</option>
                   <option value="10">Oct</option>
@@ -322,9 +374,9 @@ class Management extends Component {
                   <option value="02">Feb</option>
                   <option value="01">Jan</option>
                 </select>
-                <Button className="control_button" variant="info" onClick={this.updateButtonClick}>
+                {/* <Button className="control_button" variant="info" onClick={this.updateButtonClick}>
                   <div className="control_button_image" id="update_button_image"></div>Update
-                </Button>
+                </Button> */}
               </div>
             </div>
             <div className="RecordsArea">

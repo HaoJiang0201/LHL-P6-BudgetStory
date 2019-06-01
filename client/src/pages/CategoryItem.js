@@ -38,7 +38,7 @@ class CategoryItem extends Component {
         let categoryName = this.props.name ? this.props.name: this.state.name;
         return (
             <div className={categoryItemClass} onClick={this.onItemClick} onDoubleClick={this.onItemDoubleClick}>
-                <p className="category_text">{categoryName}</p>
+                <p className="category_text disable-selection">{categoryName}</p>
             </div>
         );
     }

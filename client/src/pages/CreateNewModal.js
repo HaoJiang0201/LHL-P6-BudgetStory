@@ -26,18 +26,33 @@ class CreateNewModal extends Component {
 
     createCategoryRecord = (event) => {
         event.preventDefault();
-        const newCat = {
-            name: event.target.name.value,
-            notes: "",
-            parent_id: this.props.parentID
+        if(this.state.currentType === "1") {
+            const newCat = {
+                name: event.target.name.value,
+                notes: "",
+                parent_id: this.props.parentID
+            }
+            axios.post('/newCategory', {newCat})
+            .then((response) => {
+                this.props.updateNewCategoryRecord("category");
+                this.newDlgClose();
+            });
+        } else {
+            let dateNew = event.target.date.value;
+            const newRec = {
+                category_id: this.props.parentID,
+                value: Math.round((event.target.value.value*100) * 100) / 100,
+                date: dateNew,
+                notes: event.target.notes.value
+            };
+            axios.post('/newRecord', {newRec}).then((response) => {
+                console.log("dateNew = ", dateNew);
+                this.props.updateNewCategoryRecord(dateNew);
+                this.newDlgClose();
+            })
         }
-        axios.post('/newCategory', {newCat})
-        .then((response) => {
-            this.props.updateNewCategory();
-            this.newDlgClose();
-        })
+        
     }
-
 
     render() {
         let NewCRContents;
@@ -56,7 +71,7 @@ class CreateNewModal extends Component {
                 <div className="new_cr_contents">
                     <Form.Group controlId="recordAmount">
                         <Form.Label>Amount:</Form.Label>
-                        <Form.Control type="number" placeholder="$" step='0.01' name='amount' />
+                        <Form.Control type="number" placeholder="$" step='0.01' name='value' />
                     </Form.Group>
                     <Form.Group controlId="recordDate">
                         <Form.Label>Date:</Form.Label>
