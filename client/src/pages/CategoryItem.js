@@ -27,7 +27,7 @@ class CategoryItem extends Component {
         });
         this.props.categoryOpen(this.state.id, this.state.name);
     }
-  
+
     componentDidMount() {
 
     }

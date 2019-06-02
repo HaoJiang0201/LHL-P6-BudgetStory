@@ -439,13 +439,22 @@ app.get('/GetSubCategories', (req,res) => {
   knex.select().from('categories').where({parent_id: req.query.parent_id})
   .then((results) => {
     let categories = results;
-    knex.select().from('records').where({category_id: req.query.parent_id})
-    .andWhere('date', '>=', req.query.start).andWhere('date', '<=', req.query.end)
-    .then((results) => {
-      let records = results;
-      res.json({ categories: categories, records: records });
-    })
-    .catch(err => console.error(err));
+    if(req.query.start === "" || req.query.end === "") {  // Show All Records
+      knex.select().from('records').where({category_id: req.query.parent_id})
+      .then((results) => {
+        let records = results;
+        res.json({ categories: categories, records: records });
+      })
+      .catch(err => console.error(err));
+    } else {  // Show Records based on the date filter
+      knex.select().from('records').where({category_id: req.query.parent_id})
+      .andWhere('date', '>=', req.query.start).andWhere('date', '<=', req.query.end)
+      .then((results) => {
+        let records = results;
+        res.json({ categories: categories, records: records });
+      })
+      .catch(err => console.error(err));
+    }
   });
 });
 

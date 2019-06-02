@@ -56,8 +56,7 @@ class Management extends Component {
     this.date = new Date().toISOString().split('T')[0];
     this.selectYear = this.date.split('-')[0];
     this.selectMonth = this.date.split('-')[1];
-    // this.filterYear = this.selectYear;
-    // this.filterMonth = this.selectMonth;
+    this.showAllRecords = false;
   }
 
   backButtonClick = () => {
@@ -130,11 +129,15 @@ class Management extends Component {
   getSubCategories = (parent_id, parent_name) => {
     let start = this.selectYear + "-" + this.selectMonth + "-01";
     let end = this.selectYear + "-" + this.selectMonth + "-" + this.endOfMonth(this.selectMonth);
+    if(this.showAllRecords) {
+      start = "";
+      end = "";
+    }
     axios('/GetSubCategories', {
       params: {
         parent_id: parent_id,
         start: start,
-        end:end
+        end: end
       }
     })
     .then(
@@ -162,6 +165,11 @@ class Management extends Component {
     });
   }
 
+  showAllChecked = (event) => {
+    this.showAllRecords = event.target.checked;
+    this.getSubCategories(this.state.parentID, this.state.parentCategory);
+  }
+
   newCategoryRecord = () => {
     if(this.state.parentID === 0) {
       alert("Please create new Category or Record in Expenses or Incomes.");
@@ -187,10 +195,6 @@ class Management extends Component {
       this.selectYear = date.split('-')[0];
       this.selectMonth = date.split('-')[1];
     }
-    // else {
-    //   console.log("no need to change date selectors.");
-    //   console.log("date = ", date);
-    // }
     this.getSubCategories(this.state.parentID, this.state.parentCategory);
   }
 
@@ -326,7 +330,8 @@ class Management extends Component {
               key={record.id}
               id={record.id} category_id={record.category_id} value={value} date={date} notes = {record.notes}
               select={true}
-              recordSelect={this.recordSelect.bind(this)} />
+              recordSelect={this.recordSelect.bind(this)}
+              editCategoryRecord={this.editCategoryRecord} />
           );
         } else {
           return (
@@ -334,7 +339,8 @@ class Management extends Component {
               key={record.id}
               id={record.id} category_id={record.category_id} value={value} date={date} notes = {record.notes}
               select={false}
-              recordSelect={this.recordSelect.bind(this)} />
+              recordSelect={this.recordSelect.bind(this)}
+              editCategoryRecord={this.editCategoryRecord} />
           );
         }                
       })
@@ -434,6 +440,11 @@ class Management extends Component {
                 Records
                 <div className="category_record_title_icon record_image"></div>
               </h5>
+              <p className="checkbox_text">
+                <input className="checkbox" type="checkbox" defaultChecked={this.showAllRecords}
+                onChange={this.showAllChecked}>
+                </input>Show All
+              </p>
               <div className="time_selector_area">
                 {/* <h6 className="time_label">Year</h6> */}
                 <select className="time_selector" value={this.selectYear} onChange={this.yearChange}>

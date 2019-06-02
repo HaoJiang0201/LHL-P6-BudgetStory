@@ -17,11 +17,21 @@ class RecordItem extends Component {
       }
     }
 
-    onItemClick = () => {
+    onItemClick = (event) => {
+        event.preventDefault();
         this.setState({
             select: true
         });
         this.props.recordSelect(this.state.id);
+    }
+
+    onItemDoubleClick = (event) => {
+        event.preventDefault();
+        this.setState({
+            select: true
+        });
+        this.props.recordSelect(this.state.id);
+        this.props.editCategoryRecord();
     }
   
     componentDidMount() {
@@ -30,9 +40,8 @@ class RecordItem extends Component {
   
     render() {
         let recordItemClass = this.props.select ? "record_item_select" : "record_item";
-        // let recordName = this.props.name ? this.props.name: this.state.name;
         return (
-            <div className={recordItemClass} onClick={this.onItemClick}>
+            <div className={recordItemClass} onClick={this.onItemClick} onDoubleClick={this.onItemDoubleClick}>
                 <div className="record_img"></div>
                 <div className="record_text disable-selection">
                     <div className="record_value">$ {this.props.value}</div>

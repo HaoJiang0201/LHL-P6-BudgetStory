@@ -223,13 +223,27 @@
 .record_image
 {
     background-image: url("../picture/Record.png");
-    
+}
+.checkbox {
+    text-align: center;
+    margin: 0px 5px 0px 0px;
+    min-width: 20px;
+    min-height: 20px;
+}
+.checkbox_text {
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    margin: 0px 0px 0px auto;
+    min-width: 100px;
+    opacity: 0.8;
 }
 .time_selector_area
 {
     display: inline-flex;
     align-items: center;
-    margin: 0px 2vw 0px auto;
+    margin: 0px 2vw 0px 15px;
 }
 .time_label
 {
