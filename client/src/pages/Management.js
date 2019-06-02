@@ -50,7 +50,8 @@ class Management extends Component {
         // }
       ],
       createNewShow: false,
-      editExistShow: false
+      editExistShow: false,
+      deleteShow: false
     }
     this.date = new Date().toISOString().split('T')[0];
     this.selectYear = this.date.split('-')[0];
@@ -60,7 +61,7 @@ class Management extends Component {
   }
 
   backButtonClick = () => {
-    axios('/api/GetParentCategory', {
+    axios('/GetParentCategory', {
       params: {
         id: this.state.parentID
       }
@@ -176,12 +177,13 @@ class Management extends Component {
     this.setState({
       ...this.state,
       createNewShow: false,
-      editExistShow: false
+      editExistShow: false,
+      deleteShow: false
     });
   }
 
   updateNewCategoryRecord = (date) => {
-    if(date != "category") {
+    if(date != "category" && date != "delete") {
       this.selectYear = date.split('-')[0];
       this.selectMonth = date.split('-')[1];
     }
@@ -215,7 +217,7 @@ class Management extends Component {
     }
   }
 
-  deleteCategoryRecord = () => {
+  showDeleteDialog = () => {
     if(this.state.categorySelect === 0 && this.state.recordSelect === 0) {
       alert("Please select a Category or Record to Delete.");
     } else {
@@ -223,20 +225,53 @@ class Management extends Component {
         alert("Expenses and Incomes are default parent category which cannot be Deleted.");
       } else {
         if(this.state.categorySelect != 0) {
-          console.log("select category = ", this.state.categorySelect);
+          this.setState({
+            ...this.state,
+            deleteShow: true
+          });
         }
         if(this.state.recordSelect != 0) {
-          console.log("select record = ", this.state.recordSelect);
+          this.setState({
+            ...this.state,
+            deleteShow: true
+          });
         }
       }
     }
   }
+
+  deleteCategoryRecord = (event) => {
+    event.preventDefault();
+    if(this.state.categorySelect != 0) {
+      const delCategory = {
+        id: this.state.categorySelect
+      }
+      axios.post('/DeleteCategory', {delCategory})
+      .then((response) => {
+        this.dlgClose();
+        this.updateNewCategoryRecord("delete");
+      });
+    }
+    if(this.state.recordSelect != 0) {
+      const delRecord = {
+        id: this.state.recordSelect
+      }
+      axios.post('/DeleteRecord', {delRecord})
+      .then((response) => {
+        this.dlgClose();
+        this.updateNewCategoryRecord("delete");
+      });
+    }
+  }
+
   copyCategoryRecord = () => {
     console.log("Copy Button Clicked!");
   }
+
   cutCategoryRecord = () => {
     console.log("Cut Button Clicked!");
   }
+
   pasteCategoryRecord = () => {
     console.log("Paste Button Clicked!");
   }
@@ -305,6 +340,39 @@ class Management extends Component {
       })
     );
 
+    let DeleteModalContents;
+
+    if(this.state.categorySelect != 0) {
+      DeleteModalContents = (
+        <div>
+          <Modal.Header className="modal_dialog_title" closeButton>
+            <Modal.Title >Delete Category <b>{editCategory.name}</b></Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="modal_dialog_body">
+            <Form id="delete_cr" onSubmit={this.deleteCategoryRecord}>
+              <p>The category and elements inside will be removed.</p>
+            </Form>
+          </Modal.Body>
+        </div>
+      );
+    }
+    if(this.state.recordSelect != 0) {
+      DeleteModalContents = (
+        <div>
+          <Modal.Header className="modal_dialog_title" closeButton>
+            <Modal.Title >Delete Warning</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="modal_dialog_body">
+            <Form id="delete_cr" onSubmit={this.deleteCategoryRecord}>
+              <p>The Record will be removed:</p>
+              <p><b>Amount:</b> {editRecord.value} <b>Date:</b> {editRecord.date}</p>
+              <p><b>Notes:</b> {editRecord.notes}</p>
+            </Form>
+          </Modal.Body>
+        </div>
+      );
+    }
+
     let BackButton = (
       <Button className="control_button back_btn" variant="info" onClick={this.backButtonClick}>
         <div className="control_button_image" id="back_button_image"></div>Back
@@ -320,8 +388,7 @@ class Management extends Component {
     return (
       <div>
         {/* <Navbar/> */}
-        <div className="ManagementPage">    
-
+        <div className="ManagementPage">
           <div className="CategoryList">
             <div className="CategoryControlBar">
               <h5 className="category_record_title disable-selection" variant="secondary">
@@ -350,9 +417,15 @@ class Management extends Component {
                 editCategory={editCategory} editRecord={editRecord}
                 updateNewCategoryRecord={(this.updateNewCategoryRecord.bind(this))}
                 dlgClose={this.dlgClose.bind(this)} />
-              <Button className="control_button" variant="info" onClick={this.deleteCategoryRecord}>
+              <Button className="control_button" variant="info" onClick={this.showDeleteDialog}>
                 <div className="control_button_image" id="delete_button_image"></div>Delete
               </Button>
+              <Modal className="modal_dialog" show={this.state.deleteShow} onHide={this.dlgClose}>
+                {DeleteModalContents}
+                <Modal.Footer className="modal_dialog_footer">
+                  <Button variant="danger" className="control_button submit_btn" type="submit" form="delete_cr">Confirm</Button>
+                </Modal.Footer>
+              </Modal>
             </div>
           </div>
           <div className="RecordList">

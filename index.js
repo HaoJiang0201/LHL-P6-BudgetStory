@@ -309,32 +309,6 @@ function getCategoryValuForColunm(columnObj, timeID){
   }
   return valueTotal;
 }
-// Remove nouse data categories for column chart
-
-// Get All Categories need to be removed
-let categoriesRemove = [];
-function removeCategory(parent_id) {
-  categoriesRemove.push(parent_id);
-  if(allCategories.length > 0) {
-    allCategories.map(category => {
-      if(category.parent_id === parent_id) {
-        removeCategory(category.id);
-      }
-    });
-  }
-  removeRecord(parent_id);
-}
-// Get All Records need to be removed
-let recordsRemove = [];
-function removeRecord(category_id) {
-  if(allRecords.length > 0) {
-    allRecords.map(record => {
-      if(record.category_id === category_id) {
-        recordsRemove.push(record.id);
-      }
-    });
-  }
-}
 
 /******** All HTTP Requires Based On Express ********/
 // Home Page: Achieve data from DB, regulate into hightchart style, and then send back to the front
@@ -451,21 +425,6 @@ app.get('/api/getRecords', (req,res) => {
       })
 });
 
-// Handles any requests that don't match the ones above
-app.post('/newCategory', (req,res) => {
-  console.log("newCategory >>> ", req.body);
-  knex('categories').insert([{name: req.body.newCat.name, parent_id: req.body.newCat.parent_id}]).then(result =>
-    {res.json(result)})
-});
-
-app.post('/newRecord', (req,res) => {
-  knex('records').insert([{user_id: 1, notes: req.body.newRec.notes, category_id: req.body.newRec.category_id, value: req.body.newRec.value, date: req.body.newRec.date}])
-  .then(result => {
-    res.json(result);
-  })
-  .catch(err => console.error(err));
-});
-
 app.get('/api/getCategoriesMenu', (req, res) => {
   knex.select().from('categories')
   .then((results) => {
@@ -473,20 +432,94 @@ app.get('/api/getCategoriesMenu', (req, res) => {
   })
 });
 
+
+
+/******** Management Page Relevant ********/
+app.get('/GetSubCategories', (req,res) => {
+  knex.select().from('categories').where({parent_id: req.query.parent_id})
+  .then((results) => {
+    let categories = results;
+    knex.select().from('records').where({category_id: req.query.parent_id})
+    .andWhere('date', '>=', req.query.start).andWhere('date', '<=', req.query.end)
+    .then((results) => {
+      let records = results;
+      res.json({ categories: categories, records: records });
+    })
+    .catch(err => console.error(err));
+  });
+});
+
+app.get('/GetParentCategory', (req,res) => {
+  knex.select().from('categories').where({id: req.query.id})
+  .then((results) => {
+    let parentID = results[0].parent_id;
+    knex.select().from('categories').where({id: parentID})
+    .then((results) => {
+      res.json({ results });
+    })
+    .catch(err => console.error(err));
+  });
+});
+
+app.post('/NewCategory', (req,res) => {
+  knex('categories').insert([{name: req.body.newCat.name, parent_id: req.body.newCat.parent_id}]).then(result =>
+    {res.json(result)})
+});
+
+app.post('/NewRecord', (req,res) => {
+  knex('records').insert([{user_id: 1, notes: req.body.newRec.notes, category_id: req.body.newRec.category_id, value: req.body.newRec.value, date: req.body.newRec.date}])
+  .then(result => {
+    res.json(result);
+  })
+  .catch(err => console.error(err));
+});
+
 app.post('/EditCategory', (req, res) => {
-  knex('categories').where({id: req.body.editCat.id}).update({name: req.body.editCat.name, notes:req.body.editCat.notes}).then(result =>
-    {res.json(result)})
+  knex('categories').where({id: req.body.editCat.id}).update({name: req.body.editCat.name, notes:req.body.editCat.notes})
+  .then(result => {
+    res.json(result)
+  })
+  .catch(err => console.error(err));
 });
 
-app.post('/api/deleteRecord', (req, res) => {
-  recordsRemove = [];
-  knex('records').where({id: req.body.delRec.id}).del().then(result =>
-    {res.json(result)})
+app.post('/EditRecord', (req, res) => {
+  knex('records').where({id: req.body.editRecord.id})
+  .update({value: req.body.editRecord.value, date:req.body.editRecord.date, notes: req.body.editRecord.notes})
+  .then(result => {
+    res.json(result);
+  })
+  .catch(err => console.error(err));
 });
 
-app.post('/api/deleteCategory', (req, res) => {
+// Get All Categories need to be removed
+let categoriesRemove = [];
+function removeCategory(parent_id) {
+  categoriesRemove.push(parent_id);
+  if(allCategories.length > 0) {
+    allCategories.map(category => {
+      if(category.parent_id === parent_id) {
+        removeCategory(category.id);
+      }
+    });
+  }
+  removeRecord(parent_id);
+}
+
+// Get All Records need to be removed
+let recordsRemove = [];
+function removeRecord(category_id) {
+  if(allRecords.length > 0) {
+    allRecords.map(record => {
+      if(record.category_id === category_id) {
+        recordsRemove.push(record.id);
+      }
+    });
+  }
+}
+
+app.post('/DeleteCategory', (req, res) => {
   categoriesRemove = [];
-  let categoryDeleteId = req.body.delCat.id;
+  let categoryDeleteId = req.body.delCategory.id;
   knex('categories').select()
   .then(categories => {
     return Promise.all(JSON.parse(JSON.stringify(categories)));
@@ -501,13 +534,12 @@ app.post('/api/deleteCategory', (req, res) => {
 
       categoriesRemove = [];
       removeCategory(categoryDeleteId);
-      console.log("categoriesRemove : ", categoriesRemove);
-      console.log("recordsRemove : ", recordsRemove);
+      // console.log("categoriesRemove : ", categoriesRemove);
+      // console.log("recordsRemove : ", recordsRemove);
 
       if(recordsRemove.length > 0) {
         knex('records').whereIn('id', recordsRemove).del()
         .then(result => {
-          console.log("record remove info : ", result);
            knex('categories').whereIn('id', categoriesRemove).del()
           .then(result => {
              res.json('categories delete successes');
@@ -528,38 +560,11 @@ app.post('/api/deleteCategory', (req, res) => {
   .catch(err => console.error(err));
 });
 
-app.post('/EditRecord', (req, res) => {
-  knex('records').where({id: req.body.editRecord.id})
-  .update({value: req.body.editRecord.value, date:req.body.editRecord.date, notes: req.body.editRecord.notes})
-  .then(result => {
+app.post('/DeleteRecord', (req, res) => {
+  recordsRemove = [];
+  knex('records').where({id: req.body.delRecord.id}).del()
+  .then(result =>{
     res.json(result);
-  });
-});
-
-
-/******** Management Page Relevant ********/
-app.get('/GetSubCategories', (req,res) => {
-  knex.select().from('categories').where({parent_id: req.query.parent_id})
-  .then((results) => {
-    let categories = results;
-    knex.select().from('records').where({category_id: req.query.parent_id})
-    .andWhere('date', '>=', req.query.start).andWhere('date', '<=', req.query.end)
-    .then((results) => {
-      let records = results;
-      console.log("records = ", records);
-      res.json({ categories: categories, records: records });
-    });
-  });
-});
-
-app.get('/api/GetParentCategory', (req,res) => {
-  knex.select().from('categories').where({id: req.query.id})
-  .then((results) => {
-    let parentID = results[0].parent_id;
-    knex.select().from('categories').where({id: parentID})
-    .then((results) => {
-      res.json({ results });
-    });
   });
 });
 

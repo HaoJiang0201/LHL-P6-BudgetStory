@@ -32,7 +32,7 @@ class CreateNewModal extends Component {
                 notes: "",
                 parent_id: this.props.parentID
             }
-            axios.post('/newCategory', {newCat})
+            axios.post('/NewCategory', {newCat})
             .then((response) => {
                 this.props.updateNewCategoryRecord("category");
                 this.dlgClose();
@@ -45,7 +45,7 @@ class CreateNewModal extends Component {
                 date: dateNew,
                 notes: event.target.notes.value
             };
-            axios.post('/newRecord', {newRec}).then((response) => {
+            axios.post('/NewRecord', {newRec}).then((response) => {
                 this.props.updateNewCategoryRecord(dateNew);
                 this.dlgClose();
             })
