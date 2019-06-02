@@ -459,7 +459,6 @@ app.post('/newCategory', (req,res) => {
 });
 
 app.post('/newRecord', (req,res) => {
-  console.log("newRecord >>> ", req.body);
   knex('records').insert([{user_id: 1, notes: req.body.newRec.notes, category_id: req.body.newRec.category_id, value: req.body.newRec.value, date: req.body.newRec.date}])
   .then(result => {
     res.json(result);
@@ -474,7 +473,7 @@ app.get('/api/getCategoriesMenu', (req, res) => {
   })
 });
 
-app.post('/api/editCategory', (req, res) => {
+app.post('/EditCategory', (req, res) => {
   knex('categories').where({id: req.body.editCat.id}).update({name: req.body.editCat.name, notes:req.body.editCat.notes}).then(result =>
     {res.json(result)})
 });
@@ -529,14 +528,17 @@ app.post('/api/deleteCategory', (req, res) => {
   .catch(err => console.error(err));
 });
 
-app.post('/api/editRecord', (req, res) => {
-  knex('records').where({id: req.body.newRecord.id}).update({value: req.body.newRecord.value, date:req.body.newRecord.date, notes: req.body.newRecord.notes}).then(result =>
-    {res.json(result)})
+app.post('/EditRecord', (req, res) => {
+  knex('records').where({id: req.body.editRecord.id})
+  .update({value: req.body.editRecord.value, date:req.body.editRecord.date, notes: req.body.editRecord.notes})
+  .then(result => {
+    res.json(result);
+  });
 });
 
 
 /******** Management Page Relevant ********/
-app.get('/api/GetSubCategories', (req,res) => {
+app.get('/GetSubCategories', (req,res) => {
   knex.select().from('categories').where({parent_id: req.query.parent_id})
   .then((results) => {
     let categories = results;
@@ -544,6 +546,7 @@ app.get('/api/GetSubCategories', (req,res) => {
     .andWhere('date', '>=', req.query.start).andWhere('date', '<=', req.query.end)
     .then((results) => {
       let records = results;
+      console.log("records = ", records);
       res.json({ categories: categories, records: records });
     });
   });

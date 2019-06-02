@@ -35,9 +35,9 @@ class RecordItem extends Component {
             <div className={recordItemClass} onClick={this.onItemClick}>
                 <div className="record_img"></div>
                 <div className="record_text disable-selection">
-                    <div className="record_value">$ {this.state.value}</div>
-                    <div className="record_date">{this.state.date}</div>
-                    <div className="record_notes">{this.state.notes}</div>
+                    <div className="record_value">$ {this.props.value}</div>
+                    <div className="record_date">{this.props.date}</div>
+                    <div className="record_notes">{this.props.notes}</div>
                 </div>
             </div>
         );

@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Button, Modal, Form } from 'react-bootstrap';
 import Navbar from './Navbar.js';
 import CreateNewModal from './CreateNewModal.js';
+import EditExistModal from './EditExistModal.js';
 import { dateFormat } from 'highcharts';
 
 class Management extends Component {
@@ -48,7 +49,8 @@ class Management extends Component {
         //   notes: "Record 2"
         // }
       ],
-      createNewShow: false
+      createNewShow: false,
+      editExistShow: false
     }
     this.date = new Date().toISOString().split('T')[0];
     this.selectYear = this.date.split('-')[0];
@@ -127,7 +129,7 @@ class Management extends Component {
   getSubCategories = (parent_id, parent_name) => {
     let start = this.selectYear + "-" + this.selectMonth + "-01";
     let end = this.selectYear + "-" + this.selectMonth + "-" + this.endOfMonth(this.selectMonth);
-    axios('/api/GetSubCategories', {
+    axios('/GetSubCategories', {
       params: {
         parent_id: parent_id,
         start: start,
@@ -170,10 +172,11 @@ class Management extends Component {
     }
   }
 
-  newDlgClose = () => {
+  dlgClose = () => {
     this.setState({
       ...this.state,
-      createNewShow: false
+      createNewShow: false,
+      editExistShow: false
     });
   }
 
@@ -181,12 +184,11 @@ class Management extends Component {
     if(date != "category") {
       this.selectYear = date.split('-')[0];
       this.selectMonth = date.split('-')[1];
-      // this.filterYear = this.selectYear;
-      // this.filterMonth = this.selectMonth;
     }
-    else {
-      console.log("no need to change date selectors.");
-    }
+    // else {
+    //   console.log("no need to change date selectors.");
+    //   console.log("date = ", date);
+    // }
     this.getSubCategories(this.state.parentID, this.state.parentCategory);
   }
 
@@ -198,14 +200,21 @@ class Management extends Component {
         alert("Expenses and Incomes are default parent category which cannot be Edit.");
       } else {
         if(this.state.categorySelect != 0) {
-          console.log("select category = ", this.state.categorySelect);
+          this.setState({
+            ...this.state,
+            editExistShow: true
+          });
         }
         if(this.state.recordSelect != 0) {
-          console.log("select record = ", this.state.recordSelect);
+          this.setState({
+            ...this.state,
+            editExistShow: true
+          });
         }
       }
     }
   }
+
   deleteCategoryRecord = () => {
     if(this.state.categorySelect === 0 && this.state.recordSelect === 0) {
       alert("Please select a Category or Record to Delete.");
@@ -218,14 +227,6 @@ class Management extends Component {
         }
         if(this.state.recordSelect != 0) {
           console.log("select record = ", this.state.recordSelect);
-          // const delRec = {
-          //   id: this.state.recordSelect
-          // }
-          // axios.post('/api/deleteRecord', {delRec}).then((response) => {
-          //   console.log('Record Deleted!')
-          //   this.props.update()
-          //   this.handleClose();
-          // })
         }
       }
     }
@@ -246,11 +247,15 @@ class Management extends Component {
 
   render() {
 
+    let editCategory = {id: this.state.categorySelect};
+    let editRecord = {id: this.state.recordSelect};
+
     const CategoryItems = (
 
       this.state.subCategoryItems.map(category => {
 
         if(category.id === this.state.categorySelect) {
+          editCategory.name = category.name;
           return (
             <CategoryItem 
               key={category.id}
@@ -277,6 +282,10 @@ class Management extends Component {
         let date = record.date.split('T')[0];
         let value = record.value/100.0;
         if(record.id === this.state.recordSelect) {
+          editRecord.name = record.name;
+          editRecord.value = value
+          editRecord.date = date;
+          editRecord.notes = record.notes;
           return (
             <RecordItem 
               key={record.id}
@@ -333,10 +342,14 @@ class Management extends Component {
               <CreateNewModal createNewShow={this.state.createNewShow}
                 parentID={this.state.parentID} parentCategory={this.state.parentCategory}
                 updateNewCategoryRecord={(this.updateNewCategoryRecord.bind(this))}
-                newDlgClose={this.newDlgClose.bind(this)} />
+                dlgClose={this.dlgClose.bind(this)} />
               <Button className="control_button" variant="info" onClick={this.editCategoryRecord}>
                 <div className="control_button_image" id="edit_button_image"></div>Edit
               </Button>
+              <EditExistModal editExistShow={this.state.editExistShow}
+                editCategory={editCategory} editRecord={editRecord}
+                updateNewCategoryRecord={(this.updateNewCategoryRecord.bind(this))}
+                dlgClose={this.dlgClose.bind(this)} />
               <Button className="control_button" variant="info" onClick={this.deleteCategoryRecord}>
                 <div className="control_button_image" id="delete_button_image"></div>Delete
               </Button>

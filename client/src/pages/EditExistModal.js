@@ -4,12 +4,11 @@ import '../App/styles/management.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import { Button, Modal, Form } from 'react-bootstrap';
 
-class CreateNewModal extends Component {
+class EditExistModal extends Component {
 
     constructor(props) {
       super(props);
       this.state = {
-        currentType: "1"
       }
     }
 
@@ -17,35 +16,29 @@ class CreateNewModal extends Component {
         this.props.dlgClose();
     }
 
-    createNewTypeChange = (event) => {
-        this.setState({
-            ...this.state,
-            currentType: event.target.value
-        });
-    }
-
-    createCategoryRecord = (event) => {
+    editCategoryRecord = (event) => {
         event.preventDefault();
-        if(this.state.currentType === "1") {
-            const newCat = {
+        if(this.props.editCategory.id != 0) {
+            const editCat = {
+                id: this.props.editCategory.id,
                 name: event.target.name.value,
-                notes: "",
-                parent_id: this.props.parentID
+                notes: ""
             }
-            axios.post('/newCategory', {newCat})
+            axios.post('/EditCategory', {editCat})
             .then((response) => {
                 this.props.updateNewCategoryRecord("category");
                 this.dlgClose();
             });
-        } else {
+        }
+        if(this.props.editRecord.id != 0) {
             let dateNew = event.target.date.value;
-            const newRec = {
-                category_id: this.props.parentID,
+            const editRecord = {
+                id: this.props.editRecord.id,
                 value: Math.round((event.target.value.value*100) * 100) / 100,
                 date: dateNew,
                 notes: event.target.notes.value
             };
-            axios.post('/newRecord', {newRec}).then((response) => {
+            axios.post('/EditRecord', {editRecord}).then((response) => {
                 this.props.updateNewCategoryRecord(dateNew);
                 this.dlgClose();
             })
@@ -54,60 +47,64 @@ class CreateNewModal extends Component {
     }
 
     render() {
-        let NewCRContents;
-        if(this.state.currentType === "1") {
-            NewCRContents = (
+        let EditCRContents;
+        let EditTitle;
+        if(this.props.editCategory.id != 0) {
+            EditCRContents = (
                 <div className="dlg_contents">
                     <Form.Group controlId="recordAmount">
                         <Form.Label>Name:</Form.Label>
-                        <Form.Control type="text" placeholder="" name='name' />
+                        <Form.Control type="text" defaultValue={this.props.editCategory.name}
+                            placeholder={this.props.editCategory.name} name='name' />
                     </Form.Group>
                 </div>
             );
-        } else {
+            EditTitle = (
+                <Modal.Title >Edit Category</Modal.Title>
+            );
+        }
+        if(this.props.editRecord.id != 0) {
             let date = new Date().toISOString().split('T')[0];
-            NewCRContents = (
+            EditCRContents = (
                 <div className="dlg_contents">
                     <Form.Group controlId="recordAmount">
                         <Form.Label>Amount: $</Form.Label>
-                        <Form.Control type="number" placeholder="" step='0.01' name='value' />
+                        <Form.Control type="number" defaultValue={this.props.editRecord.value}
+                            placeholder={this.props.editRecord.value} step='0.01' name='value' />
                     </Form.Group>
                     <Form.Group controlId="recordDate">
                         <Form.Label>Date:</Form.Label>
-                        <Form.Control type="text" defaultValue={date} placeholder={date} name='date' />
+                        <Form.Control type="text" defaultValue={this.props.editRecord.date} 
+                            placeholder={this.props.editRecord.date} name='date' />
                     </Form.Group>
                     <Form.Group controlId="recordNotes">
                         <Form.Label>Notes:</Form.Label>
-                        <Form.Control type="text" placeholder="Where and why did I spent this money?" name='notes' />
+                        <Form.Control type="text" defaultValue={this.props.editRecord.notes} 
+                            placeholder={this.props.editRecord.notes} name='notes' />
                     </Form.Group>
                 </div>
+            );
+            EditTitle = (
+                <Modal.Title >Edit Record</Modal.Title>
             );
         }
 
         return (
-            <Modal className="modal_dialog" show={this.props.createNewShow} onHide={this.dlgClose}>
+            <Modal className="modal_dialog" show={this.props.editExistShow} onHide={this.dlgClose}>
                 <Modal.Header className="modal_dialog_title" closeButton>
-                  <Modal.Title >In Category <b>{this.props.parentCategory}</b></Modal.Title>
+                    {EditTitle}
                 </Modal.Header>
                 <Modal.Body className="modal_dialog_body">
-                    <Form id="create_new" onSubmit={this.createCategoryRecord}>
-                        <div className="create_new_type">
-                            Create a new: 
-                            <select className="time_selector create_new_type_selector" defaultValue={this.state.currentType} onChange={this.createNewTypeChange}>
-                                <option value="1">Category</option>
-                                <option value="2">Record</option>
-                            </select>
-                        </div>
-                        <hr />
-                        {NewCRContents}
+                    <Form id="edit_exist" onSubmit={this.editCategoryRecord}>
+                        {EditCRContents}
                     </Form>
                 </Modal.Body>
                 <Modal.Footer className="modal_dialog_footer">
-                  <Button variant="info" className="control_button submit_btn" type="submit" form="create_new">Submit</Button>
+                  <Button variant="info" className="control_button submit_btn" type="submit" form="edit_exist">Submit</Button>
                 </Modal.Footer>
             </Modal>
         );
     }
 }
 
-export default CreateNewModal;
+export default EditExistModal;

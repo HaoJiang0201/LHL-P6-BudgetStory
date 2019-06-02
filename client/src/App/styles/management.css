@@ -355,26 +355,26 @@
     opacity: 0.95;
 }
 /*Create New Category or Record Dialog*/
-.new_dialog
+.modal_dialog
 {
     font-family: Arial, Helvetica, sans-serif;
     opacity: 0.95;
 }
-.new_dialog_title
+.modal_dialog_title
 {
     background-color: lightskyblue;
     /* border-bottom: none; */
     border-radius: none;
     opacity: 0.95;
 }
-.new_dialog_body
+.modal_dialog_body
 {
     background-color: lightblue;
     border-top: none;
     border-bottom: none;
     opacity: 0.95;
 }
-.new_dialog_footer
+.modal_dialog_footer
 {
     background-color: lightslategray;
     border-radius: none;
