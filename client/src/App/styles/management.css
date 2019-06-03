@@ -23,6 +23,11 @@
 {
     border: 1.5px solid white;
 }
+.control_button:disabled
+{
+    border: none;
+    opacity: 0.8;
+}
 .control_button_image
 {
     background-size: cover;
@@ -30,10 +35,13 @@
     width: 25px;
     height: 25px;
     margin-right: 10px;
-    opacity: 0.75;
+    opacity: 0.8;
 }
 .control_button:hover .control_button_image {
     opacity: 1;
+}
+.control_button:disabled .control_button_image {
+    opacity: 0.8;
 }
 .back_btn
 {
@@ -251,7 +259,7 @@
 {
     display: inline-flex;
     align-items: center;
-    margin: 0px 2vw 0px 15px;
+    margin: 0px 2vw 0px 10px;
 }
 .time_label
 {
@@ -281,6 +289,32 @@
     font-weight: bold;
     border: 1.5px solid white;
     opacity: 1;
+}
+.time_selector:disabled
+{
+    background-color: grey;
+    color: lightgrey;
+    border: none;
+    opacity: 1;
+}
+.order_selector
+{
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+    border: 1.5px solid black;
+    text-align: center;
+    text-align-last: center;
+    margin-left: 10px;
+    border-radius: 5px;
+    outline: none;
+    width: 80px;
+    height: 40px;
+    opacity: 0.9;
+}
+.order_selector_text
+{
+    font-size: 15x;
 }
 .RecordsArea
 {
@@ -342,29 +376,37 @@
 {
     color:black;
     font-weight: bold;
-    text-align: left;
+    width:100%;
+    /* text-align: left;
     display: grid;
     grid-template-columns: auto auto auto;
-    grid-gap: 5px;
+    grid-gap: 5px; */
+}
+.record_row1
+{
+    display: flex;
+    align-items: center;
+    /* background-color: white; */
 }
 .record_value
 {
     /* background-color: orange; */
     min-width: 80px;
+    margin-right: auto;
 }
 .record_date
 {
     /* background-color: blue; */
     text-align: right;
     min-width: 100px;
+    margin-left: auto;
 }
 .record_notes
 {
     /* background-color: red; */
-    grid-column: 1 / span 2;
     font-weight: normal;
     min-width: 180px;
-    
+    margin-right: auto;
 }
 .RecordBottomBar
 {

@@ -65,6 +65,10 @@ class Management extends Component {
     this.copyEnable = "disabled";
     this.cutEnable = "disabled";
     this.pasteEnable = "disabled";
+
+    this.dateSelectEnable = "";
+    this.currentOrder = "desc";
+
     this.copyContents = {};
     this.cutContents = {};
     this.copyContentsInit();
@@ -80,10 +84,10 @@ class Management extends Component {
 
     this.cutContents.parent_id = 0;
     this.cutContents.category_id = 0;
-    this.copyContents.name = "";
-    this.copyContents.value = "";
-    this.copyContents.date = "";
-    this.copyContents.notes = "";
+    this.cutContents.name = "";
+    this.cutContents.value = "";
+    this.cutContents.date = "";
+    this.cutContents.notes = "";
   }
 
   backButtonClick = () => {
@@ -158,7 +162,8 @@ class Management extends Component {
       params: {
         parent_id: parent_id,
         start: start,
-        end: end
+        end: end,
+        order: this.currentOrder
       }
     })
     .then(
@@ -188,6 +193,17 @@ class Management extends Component {
 
   showAllChecked = (event) => {
     this.showAllRecords = event.target.checked;
+    if(this.showAllRecords) {
+      this.dateSelectEnable = "disabled";
+    } else {
+      this.dateSelectEnable = "";
+    }
+    
+    this.getSubCategories(this.state.parentID, this.state.parentCategory);
+  }
+
+  orderChange = (event) => {
+    this.currentOrder = event.target.value;
     this.getSubCategories(this.state.parentID, this.state.parentCategory);
   }
 
@@ -291,6 +307,7 @@ class Management extends Component {
   }
 
   copyCategoryRecord = () => {
+    this.copyContentsInit();
     if(this.state.categorySelect !== 0) {
       for(let i = 0; i < this.state.subCategoryItems.length; i ++) {
         let category = this.state.subCategoryItems[i];
@@ -320,6 +337,7 @@ class Management extends Component {
   }
 
   cutCategoryRecord = () => {
+    this.copyContentsInit();
     if(this.state.categorySelect !== 0) {
       for(let i = 0; i < this.state.subCategoryItems.length; i ++) {
         let category = this.state.subCategoryItems[i];
@@ -361,8 +379,13 @@ class Management extends Component {
       });
     }
     if(this.copyContents.value !== "") {
-      this.copyContents.category_id = this.state.parentID;
-      const newRec = this.copyContents;
+      let dateNew = this.copyContents.date;
+      const newRec = {
+          category_id: this.state.parentID,
+          value: this.copyContents.value,
+          date: dateNew,
+          notes: this.copyContents.notes
+      };
       axios.post('/NewRecord', {newRec})
       .then((response) => {
         this.updateNewCategoryRecord(newRec.date);
@@ -417,7 +440,6 @@ class Management extends Component {
         this.copyEnable = "";
         this.cutEnable = "";
       }
-      console.log("this.state.copyStatus = ", this.state.copyStatus);
       switch(this.state.copyStatus) {
         case 0: this.pasteEnable = "disabled"; break;
         case 1: this.copyEnable = "disabled";this.cutEnable = "disabled"; this.pasteEnable = ""; break;
@@ -586,9 +608,12 @@ class Management extends Component {
               onChange={this.showAllChecked}></input>
               Show All
             </label>
+            <select className="order_selector" value={this.currentOrder} onChange={this.orderChange}>
+              <option value="desc">Date ▽</option>
+              <option value="asc">Date △</option>
+            </select>
             <div className="time_selector_area">
-              {/* <h6 className="time_label">Year</h6> */}
-              <select className="time_selector" value={this.selectYear} onChange={this.yearChange}>
+              <select className="time_selector" value={this.selectYear} onChange={this.yearChange} disabled={this.dateSelectEnable}>
                 <option value="2020">2022</option>
                 <option value="2020">2021</option>
                 <option value="2020">2020</option>
@@ -597,8 +622,7 @@ class Management extends Component {
                 <option value="2018">2017</option>
                 <option value="2018">2016</option>
               </select>
-              {/* <h6 className="time_label">Month</h6> */}
-              <select className="time_selector" value={this.selectMonth} onChange={this.monthChange}>
+              <select className="time_selector" value={this.selectMonth} onChange={this.monthChange} disabled={this.dateSelectEnable}>
                 <option value="12">Dec</option>
                 <option value="11">Nov</option>
                 <option value="10">Oct</option>
@@ -612,9 +636,6 @@ class Management extends Component {
                 <option value="02">Feb</option>
                 <option value="01">Jan</option>
               </select>
-              {/* <Button className="control_button" variant="info" onClick={this.updateButtonClick}>
-                <div className="control_button_image" id="update_button_image"></div>Update
-              </Button> */}
             </div>
           </div>
           <div className="RecordsArea">

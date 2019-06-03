@@ -432,22 +432,20 @@ app.get('/api/getCategoriesMenu', (req, res) => {
   })
 });
 
-
-
 /******** Management Page Relevant ********/
 app.get('/GetSubCategories', (req,res) => {
   knex.select().from('categories').where({parent_id: req.query.parent_id})
   .then((results) => {
     let categories = results;
     if(req.query.start === "" || req.query.end === "") {  // Show All Records
-      knex.select().from('records').where({category_id: req.query.parent_id})
+      knex.select().from('records').where({category_id: req.query.parent_id}).orderBy('date', req.query.order)
       .then((results) => {
         let records = results;
         res.json({ categories: categories, records: records });
       })
       .catch(err => console.error(err));
     } else {  // Show Records based on the date filter
-      knex.select().from('records').where({category_id: req.query.parent_id})
+      knex.select().from('records').where({category_id: req.query.parent_id}).orderBy('date', req.query.order)
       .andWhere('date', '>=', req.query.start).andWhere('date', '<=', req.query.end)
       .then((results) => {
         let records = results;
@@ -476,7 +474,14 @@ app.post('/NewCategory', (req,res) => {
 });
 
 app.post('/NewRecord', (req,res) => {
-  knex('records').insert([{user_id: 1, notes: req.body.newRec.notes, category_id: req.body.newRec.category_id, value: req.body.newRec.value, date: req.body.newRec.date}])
+  let record = {
+    user_id: 1,
+    category_id: req.body.newRec.category_id,
+    value: req.body.newRec.value,
+    date: req.body.newRec.date,
+    notes: req.body.newRec.notes,
+  };
+  knex('records').insert([record])
   .then(result => {
     res.json(result);
   })

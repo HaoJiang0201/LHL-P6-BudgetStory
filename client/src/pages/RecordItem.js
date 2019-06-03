@@ -44,8 +44,10 @@ class RecordItem extends Component {
             <div className={recordItemClass} onClick={this.onItemClick} onDoubleClick={this.onItemDoubleClick}>
                 <div className="record_img"></div>
                 <div className="record_text disable-selection">
-                    <div className="record_value">$ {this.props.value}</div>
-                    <div className="record_date">{this.props.date}</div>
+                    <div className="record_row1">
+                        <div className="record_value">$ {this.props.value}</div>
+                        <div className="record_date">{this.props.date}</div>
+                    </div>
                     <div className="record_notes">{this.props.notes}</div>
                 </div>
             </div>
