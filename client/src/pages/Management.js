@@ -51,12 +51,39 @@ class Management extends Component {
       ],
       createNewShow: false,
       editExistShow: false,
-      deleteShow: false
+      deleteShow: false,
+      copyStatus: 0 //0-nothing, 1-copying, 2-cutting, 3-pasting?
     }
     this.date = new Date().toISOString().split('T')[0];
     this.selectYear = this.date.split('-')[0];
     this.selectMonth = this.date.split('-')[1];
     this.showAllRecords = false;
+    // Six Major Bottom Buttons
+    this.newEnable = "disabled";
+    this.editEnable = "disabled";
+    this.deleteEnable = "disabled";
+    this.copyEnable = "disabled";
+    this.cutEnable = "disabled";
+    this.pasteEnable = "disabled";
+    this.copyContents = {};
+    this.cutContents = {};
+    this.copyContentsInit();
+  }
+
+  copyContentsInit = () => {
+    this.copyContents.parent_id = 0;
+    this.copyContents.category_id = 0;
+    this.copyContents.name = "";
+    this.copyContents.value = "";
+    this.copyContents.date = "";
+    this.copyContents.notes = "";
+
+    this.cutContents.parent_id = 0;
+    this.cutContents.category_id = 0;
+    this.copyContents.name = "";
+    this.copyContents.value = "";
+    this.copyContents.date = "";
+    this.copyContents.notes = "";
   }
 
   backButtonClick = () => {
@@ -87,12 +114,6 @@ class Management extends Component {
     this.selectMonth = event.target.value;
     this.getSubCategories(this.state.parentID, this.state.parentCategory);
   }
-
-  // updateButtonClick = () => {
-  //   // this.filterYear = this.selectYear;
-  //   // this.filterMonth = this.selectMonth;
-  //   this.getSubCategories(this.state.parentID, this.state.parentCategory);
-  // }
 
   categorySelect = (id) => {
     this.setState({
@@ -195,6 +216,7 @@ class Management extends Component {
       this.selectYear = date.split('-')[0];
       this.selectMonth = date.split('-')[1];
     }
+    this.copyContentsInit();
     this.getSubCategories(this.state.parentID, this.state.parentCategory);
   }
 
@@ -269,15 +291,104 @@ class Management extends Component {
   }
 
   copyCategoryRecord = () => {
-    console.log("Copy Button Clicked!");
+    if(this.state.categorySelect !== 0) {
+      for(let i = 0; i < this.state.subCategoryItems.length; i ++) {
+        let category = this.state.subCategoryItems[i];
+        if(category.id === this.state.categorySelect) {
+          this.copyContents.name = category.name;
+          this.copyContents.value = "";
+          this.copyContents.date = "";
+          this.copyContents.notes = "";
+        }
+      }
+    }
+    if(this.state.recordSelect !== 0) {
+      for(let i = 0; i < this.state.subRecordItems.length; i ++) {
+        let record = this.state.subRecordItems[i];
+        if(record.id === this.state.recordSelect) {
+          this.copyContents.name = ""
+          this.copyContents.value = record.value;
+          this.copyContents.date = record.date;
+          this.copyContents.notes = record.notes;
+        }
+      }
+    }
+    this.setState({
+      ...this.state,
+      copyStatus: 1
+    });
   }
 
   cutCategoryRecord = () => {
-    console.log("Cut Button Clicked!");
+    if(this.state.categorySelect !== 0) {
+      for(let i = 0; i < this.state.subCategoryItems.length; i ++) {
+        let category = this.state.subCategoryItems[i];
+        if(category.id === this.state.categorySelect) {
+          this.cutContents.id = this.state.categorySelect;
+          this.cutContents.name = category.name;
+          this.cutContents.value = "";
+          this.cutContents.date = "";
+          this.cutContents.notes = "";
+        }
+      }
+    }
+    if(this.state.recordSelect !== 0) {
+      for(let i = 0; i < this.state.subRecordItems.length; i ++) {
+        let record = this.state.subRecordItems[i];
+        if(record.id === this.state.recordSelect) {
+          this.cutContents.id = this.state.recordSelect;
+          this.cutContents.name = "";
+          this.cutContents.value = record.value;
+          this.cutContents.date = record.date;
+          this.cutContents.notes = record.notes;
+        }
+      }
+    }
+    this.setState({
+      ...this.state,
+      copyStatus: 2
+    });
   }
 
   pasteCategoryRecord = () => {
-    console.log("Paste Button Clicked!");
+    // Copy Paste
+    if(this.copyContents.name !== "") {
+      this.copyContents.parent_id = this.state.parentID;
+      const newCat = this.copyContents;
+      axios.post('/NewCategory', {newCat})
+      .then((response) => {
+        this.updateNewCategoryRecord("category");
+      });
+    }
+    if(this.copyContents.value !== "") {
+      this.copyContents.category_id = this.state.parentID;
+      const newRec = this.copyContents;
+      axios.post('/NewRecord', {newRec})
+      .then((response) => {
+        this.updateNewCategoryRecord(newRec.date);
+      });
+    }
+    // Cut Paste
+    if(this.cutContents.name !== "") {
+      this.cutContents.parent_id = this.state.parentID;
+      const cutCat = this.cutContents;
+      axios.post('/CutCategory', {cutCat})
+      .then((response) => {
+        this.updateNewCategoryRecord("category");
+      });
+    }
+    if(this.cutContents.value !== "") {
+      this.cutContents.category_id = this.state.parentID;
+      const cutRec = this.cutContents;
+      axios.post('/CutRecord', {cutRec})
+      .then((response) => {
+        this.updateNewCategoryRecord(cutRec.date);
+      });
+    }
+    this.setState({
+      ...this.state,
+      copyStatus: 0
+    });
   }
 
   componentDidMount() {
@@ -285,7 +396,36 @@ class Management extends Component {
   }
 
   render() {
-
+    // Six Major Bottom Buttons' Statement
+    if(this.state.parentID === 0) {
+      this.newEnable = "disabled";
+      this.editEnable = "disabled";
+      this.deleteEnable = "disabled";
+      this.copyEnable = "disabled";
+      this.cutEnable = "disabled";
+      this.pasteEnable = "disabled";
+    } else {
+      this.newEnable = "";
+      if(this.state.categorySelect === 0 && this.state.recordSelect === 0) {
+        this.editEnable = "disabled";
+        this.deleteEnable = "disabled";
+        this.copyEnable = "disabled";
+        this.cutEnable = "disabled";
+      } else {
+        this.editEnable = "";
+        this.deleteEnable = "";
+        this.copyEnable = "";
+        this.cutEnable = "";
+      }
+      console.log("this.state.copyStatus = ", this.state.copyStatus);
+      switch(this.state.copyStatus) {
+        case 0: this.pasteEnable = "disabled"; break;
+        case 1: this.copyEnable = "disabled";this.cutEnable = "disabled"; this.pasteEnable = ""; break;
+        case 2: this.copyEnable = "disabled";this.cutEnable = "disabled"; this.pasteEnable = ""; break;
+        case 3: break;
+        default: break;
+      }
+    }
     let editCategory = {id: this.state.categorySelect};
     let editRecord = {id: this.state.recordSelect};
 
@@ -409,21 +549,21 @@ class Management extends Component {
               </div>
             </div>
             <div className="CategoryBottomBar">
-              <Button className="control_button" variant="info" onClick={this.newCategoryRecord}>
+              <Button className="control_button" disabled={this.newEnable} variant="info" onClick={this.newCategoryRecord}>
                 <div className="control_button_image" id="new_button_image"></div>New
               </Button>
               <CreateNewModal createNewShow={this.state.createNewShow}
                 parentID={this.state.parentID} parentCategory={this.state.parentCategory}
                 updateNewCategoryRecord={(this.updateNewCategoryRecord.bind(this))}
                 dlgClose={this.dlgClose.bind(this)} />
-              <Button className="control_button" variant="info" onClick={this.editCategoryRecord}>
+              <Button className="control_button" disabled={this.editEnable} variant="info" onClick={this.editCategoryRecord}>
                 <div className="control_button_image" id="edit_button_image"></div>Edit
               </Button>
               <EditExistModal editExistShow={this.state.editExistShow}
                 editCategory={editCategory} editRecord={editRecord}
                 updateNewCategoryRecord={(this.updateNewCategoryRecord.bind(this))}
                 dlgClose={this.dlgClose.bind(this)} />
-              <Button className="control_button" variant="info" onClick={this.showDeleteDialog}>
+              <Button className="control_button" disabled={this.deleteEnable} variant="info" onClick={this.showDeleteDialog}>
                 <div className="control_button_image" id="delete_button_image"></div>Delete
               </Button>
               <Modal className="modal_dialog" show={this.state.deleteShow} onHide={this.dlgClose}>
@@ -482,13 +622,13 @@ class Management extends Component {
               </div>
             </div>
             <div className="RecordBottomBar">
-              <Button className="control_button" variant="info" onClick={this.copyCategoryRecord}>
+              <Button className="control_button" disabled={this.copyEnable} variant="info" onClick={this.copyCategoryRecord}>
                 <div className="control_button_image" id="copy_button_image"></div>Copy
               </Button>
-              <Button className="control_button" variant="info" onClick={this.cutCategoryRecord}>
+              <Button className="control_button" disabled={this.cutEnable} variant="info" onClick={this.cutCategoryRecord}>
                 <div className="control_button_image" id="cut_button_image"></div>Cut
               </Button>
-              <Button className="control_button" variant="info" onClick={this.pasteCategoryRecord}>
+              <Button className="control_button" disabled={this.pasteEnable} variant="info" onClick={this.pasteCategoryRecord}>
                 <div className="control_button_image" id="paste_button_image"></div>Paste
               </Button>
             </div>

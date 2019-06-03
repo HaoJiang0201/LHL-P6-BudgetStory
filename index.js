@@ -500,6 +500,22 @@ app.post('/EditRecord', (req, res) => {
   .catch(err => console.error(err));
 });
 
+app.post('/CutCategory', (req, res) => {
+  knex('categories').where({id: req.body.cutCat.id}).update({parent_id: req.body.cutCat.parent_id})
+  .then(result => {
+    res.json(result)
+  })
+  .catch(err => console.error(err));
+});
+
+app.post('/CutRecord', (req, res) => {
+  knex('records').where({id: req.body.cutRec.id}).update({category_id: req.body.cutRec.category_id})
+  .then(result => {
+    res.json(result);
+  })
+  .catch(err => console.error(err));
+});
+
 // Get All Categories need to be removed
 let categoriesRemove = [];
 function removeCategory(parent_id) {
