@@ -1,129 +1,76 @@
-
 .navbar {
-  height: 10%;
-  padding: 0;
-  background-color: #2F3136;
-  opacity: 0.8;
-  border-bottom-left-radius: 60px;
-  vertical-align: middle;
-  text-align: center;
-  margin: auto;
-  position: relative;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 8vh;
+  font-family: Arial, Helvetica, sans-serif;
+  opacity: 0.85;
+  margin:0px;
+  padding:0px;
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer */
+  -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+  -webkit-user-select: none; /* Chrome, Safari, and Opera */
+  -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
 }
 
-
-.contents .navbar-brand {
+.navbar-brand {
   color: lightblue;
-  font-family: "Great Vibes", cursive;
-  font-weight: normal;
-  text-shadow: 0 1px 1px #fff;
-  padding: 0;
-  padding-top: 0;
-  -webkit-transition: .5s ease-out;
-  -moz-transition:  .5s ease-out;
-  transition:  .5s ease-out;
-  font-size: 160%;
-  justify-content: center;
-  display: flex;
-  text-align: center;
-  align-items: center;
+  font-weight: bold;
+  text-shadow: 0 1px 1px white;
+  font-size: 32px;
+  height: 8vh;
+  margin:0px 44vw 0px auto;
 }
 
-.contents .navbar-brand:hover {
-  -webkit-transform: rotateZ(-10deg);
-  -moz-transform: rotateZ(-10deg);
-  transform: rotateZ(-10deg);
-}
-
-
-.add_new_btns {
-  padding: 0;
-}
-
-.contents {
-  position: relative;
-  margin-left: 3%;
-  height: 100%;
-  width: 50%;
-  display: flex;
-  font-family: "Great Vibes", cursive;
-  font-weight: normal;
-  text-shadow: 0 1px 1px #fff;
-  font-size: 150%;
-
-}
-.contents div {
-  width: 20%;
-}
-
-.contents div:hover {
-  text-decoration: underline;
-}
-
-#comparePage {
+.menu_button_area {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 100%;
-  color: #A49492;
-  width: 100%;
-  margin-left: 3%;
+  margin-left: 10px;
+  font-size:20px;
 }
 
-#comparePage a {
-  color: #A49492;
-}
-
-
-#comparePage:hover a {
-  font-size: 140%;
-  transition: 1s;
-}
-
-
-#categoryPage {
+.menu_button {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-
-#categoryPage a {
-  color: #A49492;
-}
-
-
-#categoryPage:hover a {
-  font-size: 140%;
-  transition: 1s;
-}
-
-.slogan {
-  position: absolute;
-  right: 0;
-  width: 57%;
+  color: white;
+  background-color: black;
   text-align: left;
-  align-items: center;
-  justify-content: center;
-  font-family: "Great Vibes", cursive;
-  font-weight: normal;
-  text-shadow: 0 1px 1px #fff;
-  font-size: 160%;
-  color: #A49492;
+  margin: 10px;
+  opacity: 0.85;
 }
 
-.userInfo {
-  position: relative;
-  right: 5%;
-  align-items: center;
-  justify-content: center;
-  font-family: "Great Vibes", cursive;
-  font-weight: normal;
-  text-shadow: 0 1px 1px #fff;
-  font-size: 160%;
-  color: #A49492;
+.menu_button:hover {
+  color: lightblue;
+  opacity: 0.8;
 }
 
+.menu_button_image
+{
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    opacity: 0.85;
+}
 
+.menu_button:hover .menu_button_image {
+  opacity: 1;
+}
 
+#home_button
+{
+  background-image: url("../picture/Home.png"); 
+} 
+
+#compare_button
+{
+  background-image: url("../picture/Compare.png"); 
+}
+
+#manage_button
+{
+  background-image: url("../picture/Manage.png"); 
+} 

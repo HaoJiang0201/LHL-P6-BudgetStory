@@ -533,13 +533,14 @@ class Management extends Component {
 
     return (
       <div>
-        {/* <Navbar/> */}
+        <div className="Background"></div>
+        <Navbar/>
         <div className="ManagementPage">
           <div className="CategoryList">
             <div className="CategoryControlBar">
               <h5 className="category_record_title disable-selection" variant="secondary">
-                {this.state.parentCategory}
                 <div className="category_record_title_icon category_imgage"></div>
+                {this.state.parentCategory}
               </h5>
               { BackButton  }
             </div>
@@ -575,64 +576,64 @@ class Management extends Component {
             </div>
           </div>
           <div className="RecordList">
-            <div className="RecordControlBar">
-              <h5 className="category_record_title disable-selection" variant="secondary">
-                Records
-                <div className="category_record_title_icon record_image"></div>
-              </h5>
-              <p className="checkbox_text">
-                <input className="checkbox" type="checkbox" defaultChecked={this.showAllRecords}
-                onChange={this.showAllChecked}>
-                </input>Show All
-              </p>
-              <div className="time_selector_area">
-                {/* <h6 className="time_label">Year</h6> */}
-                <select className="time_selector" value={this.selectYear} onChange={this.yearChange}>
-                  <option value="2020">2022</option>
-                  <option value="2020">2021</option>
-                  <option value="2020">2020</option>
-                  <option value="2019">2019</option>
-                  <option value="2018">2018</option>
-                  <option value="2018">2017</option>
-                  <option value="2018">2016</option>
-                </select>
-                {/* <h6 className="time_label">Month</h6> */}
-                <select className="time_selector" value={this.selectMonth} onChange={this.monthChange}>
-                  <option value="12">Dec</option>
-                  <option value="11">Nov</option>
-                  <option value="10">Oct</option>
-                  <option value="09">Sep</option>
-                  <option value="08">Aug</option>
-                  <option value="07">Jul</option>
-                  <option value="06">Jun</option>
-                  <option value="05">May</option>
-                  <option value="04">Apr</option>
-                  <option value="03">Mar</option>
-                  <option value="02">Feb</option>
-                  <option value="01">Jan</option>
-                </select>
-                {/* <Button className="control_button" variant="info" onClick={this.updateButtonClick}>
-                  <div className="control_button_image" id="update_button_image"></div>Update
-                </Button> */}
-              </div>
-            </div>
-            <div className="RecordsArea">
-              <div className="record_item_list">
-                {RecordItems}
-              </div>
-            </div>
-            <div className="RecordBottomBar">
-              <Button className="control_button" disabled={this.copyEnable} variant="info" onClick={this.copyCategoryRecord}>
-                <div className="control_button_image" id="copy_button_image"></div>Copy
-              </Button>
-              <Button className="control_button" disabled={this.cutEnable} variant="info" onClick={this.cutCategoryRecord}>
-                <div className="control_button_image" id="cut_button_image"></div>Cut
-              </Button>
-              <Button className="control_button" disabled={this.pasteEnable} variant="info" onClick={this.pasteCategoryRecord}>
-                <div className="control_button_image" id="paste_button_image"></div>Paste
-              </Button>
+          <div className="RecordControlBar">
+            <h5 className="category_record_title disable-selection" variant="secondary">
+              <div className="category_record_title_icon record_image"></div>
+              Records
+            </h5>
+            <label className="checkbox_text disable-selection" onClick={this.showAllChecked}>
+              <input className="checkbox" type="checkbox" text="test" defaultChecked={this.showAllRecords}
+              onChange={this.showAllChecked}></input>
+              Show All
+            </label>
+            <div className="time_selector_area">
+              {/* <h6 className="time_label">Year</h6> */}
+              <select className="time_selector" value={this.selectYear} onChange={this.yearChange}>
+                <option value="2020">2022</option>
+                <option value="2020">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2018">2017</option>
+                <option value="2018">2016</option>
+              </select>
+              {/* <h6 className="time_label">Month</h6> */}
+              <select className="time_selector" value={this.selectMonth} onChange={this.monthChange}>
+                <option value="12">Dec</option>
+                <option value="11">Nov</option>
+                <option value="10">Oct</option>
+                <option value="09">Sep</option>
+                <option value="08">Aug</option>
+                <option value="07">Jul</option>
+                <option value="06">Jun</option>
+                <option value="05">May</option>
+                <option value="04">Apr</option>
+                <option value="03">Mar</option>
+                <option value="02">Feb</option>
+                <option value="01">Jan</option>
+              </select>
+              {/* <Button className="control_button" variant="info" onClick={this.updateButtonClick}>
+                <div className="control_button_image" id="update_button_image"></div>Update
+              </Button> */}
             </div>
           </div>
+          <div className="RecordsArea">
+            <div className="record_item_list">
+              {RecordItems}
+            </div>
+          </div>
+          <div className="RecordBottomBar">
+            <Button className="control_button" disabled={this.copyEnable} variant="info" onClick={this.copyCategoryRecord}>
+              <div className="control_button_image" id="copy_button_image"></div>Copy
+            </Button>
+            <Button className="control_button" disabled={this.cutEnable} variant="info" onClick={this.cutCategoryRecord}>
+              <div className="control_button_image" id="cut_button_image"></div>Cut
+            </Button>
+            <Button className="control_button" disabled={this.pasteEnable} variant="info" onClick={this.pasteCategoryRecord}>
+              <div className="control_button_image" id="paste_button_image"></div>Paste
+            </Button>
+          </div>
+        </div>
         </div>
       </div>
     );

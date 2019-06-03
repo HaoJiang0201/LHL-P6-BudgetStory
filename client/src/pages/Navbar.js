@@ -14,25 +14,21 @@ class Navbar extends Component {
   render() {
     return (
       <nav className="navbar">
-        <div className="contents" id="logo">
-          <a href="/" className="navbar-brand">BudgeStory</a>
-            <div id="compareBox">
-              <div id="comparePage">
-                <a href="/compare">Compare</a>
-              </div>
-            </div>
-            <div id="categoryBox">
-              <div id="categoryPage">
-                <a href="/categories">Category</a>
-              </div>
-            </div>
+        <div className="menu_button_area">
+          <a className="menu_button" href="/">
+            <div className="menu_button_image" id="home_button"></div>
+            Home
+          </a>
+          <a className="menu_button" href="/compare">
+            <div className="menu_button_image" id="compare_button"></div>
+            Compare
+          </a>
+          <a className="menu_button" href="/manage">
+            <div className="menu_button_image" id="manage_button"></div>
+            Manage
+          </a>
         </div>
-            <div className="slogan">
-              <a>Write Your Own BudgeStory</a>
-            </div>
-          <div className="userInfo">
-            <a>Hao Jiang</a>
-          </div>
+        <p className="navbar-brand">Budget Story</p>
       </nav>
     )
   }

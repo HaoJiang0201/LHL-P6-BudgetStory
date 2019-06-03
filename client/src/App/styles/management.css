@@ -81,6 +81,17 @@
     background-image: url("../picture/Paste.png");
 }
 
+.Background
+{
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../picture/Budget.jpg");
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    top: 0;
+}
+
 /* Categories and Records Management Page */
 .ManagementPage
 {
@@ -89,10 +100,7 @@
     align-items: top;
     background-color: white;
     width: 100vw;
-    height: 100vh;
-    background-image: url("../picture/Budget.jpg");
-    background-size: cover;
-    background-position: center;
+    height: 92vh;
 }
 
 /* Left Side: Category Area */
@@ -102,7 +110,7 @@
     align-items: center;
     background-color: lightskyblue;
     width: 50vw;
-    height: 10vh;
+    height: 8vh;
     border: 2px solid black;
     border-top: none;
     border-left: none;
@@ -137,7 +145,7 @@
 {
     background-color: lightblue;
     width: 50vw;
-    height: 82vh;
+    height: 76vh;
     border: 2px solid black;
     border-left: none;
     overflow: auto;
@@ -217,7 +225,7 @@
     align-items: center;
     background-color: lightskyblue;
     width: 50vw;
-    height: 10vh;
+    height: 8vh;
     opacity: 0.95;
 }
 .record_image
@@ -278,7 +286,7 @@
 {
     background-color:lightblue; 
     width: 50vw;
-    height: 82vh;
+    height: 76vh;
     border: 2px solid black;
     border-left: none;
     border-right: none;

@@ -5,7 +5,6 @@ import './App.css';
 
 import Home from './pages/Home';
 import Compare from './pages/Compare';
-import Categories from './pages/Categories';
 import Management from './pages/Management';
 
 class App extends Component {
@@ -15,9 +14,8 @@ class App extends Component {
       <div>
         <Switch>
           <Route exact path='/' component={Home}/>
-          <Route path='/categories' component={Categories}/>
           <Route path='/compare' component={Compare}/>
-          <Route path='/management' component={Management}/>
+          <Route path='/manage' component={Management}/>
         </Switch>
       </div>
     )
