@@ -60,10 +60,6 @@
 {
     background-image: url("../picture/Back.png"); 
 }  
-#update_button_image
-{
-    background-image: url("../picture/Refresh.png"); 
-}
 #new_button_image
 {
     background-image: url("../picture/New.png"); 
@@ -259,7 +255,7 @@
 {
     display: inline-flex;
     align-items: center;
-    margin: 0px 2vw 0px 10px;
+    margin: 0px 1vw 0px 10px;
 }
 .time_label
 {
@@ -308,9 +304,15 @@
     margin-left: 10px;
     border-radius: 5px;
     outline: none;
-    width: 80px;
+    width: 110px;
     height: 40px;
     opacity: 0.9;
+    padding: 0px 0px 5px 0px;
+}
+.order_selector:hover
+{
+    border: 1.5px solid white;
+    opacity: 1;
 }
 .order_selector_text
 {
@@ -377,10 +379,6 @@
     color:black;
     font-weight: bold;
     width:100%;
-    /* text-align: left;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-gap: 5px; */
 }
 .record_row1
 {
@@ -400,6 +398,7 @@
     text-align: right;
     min-width: 100px;
     margin-left: auto;
+    margin-right: 1vw;
 }
 .record_notes
 {

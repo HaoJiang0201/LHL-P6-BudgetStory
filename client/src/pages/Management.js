@@ -67,7 +67,10 @@ class Management extends Component {
     this.pasteEnable = "disabled";
 
     this.dateSelectEnable = "";
-    this.currentOrder = "desc";
+
+    this.orderValue = "1";
+    this.orderBy = "date";
+    this.orderType = "desc";
 
     this.copyContents = {};
     this.cutContents = {};
@@ -163,7 +166,8 @@ class Management extends Component {
         parent_id: parent_id,
         start: start,
         end: end,
-        order: this.currentOrder
+        orderType: this.orderType,
+        orderBy: this.orderBy
       }
     })
     .then(
@@ -203,7 +207,15 @@ class Management extends Component {
   }
 
   orderChange = (event) => {
-    this.currentOrder = event.target.value;
+    switch(event.target.value) {
+      case "1": this.orderValue = "1"; this.orderType = "desc"; this.orderBy = "date"; break;
+      case "2": this.orderValue = "2"; this.orderType = "asc"; this.orderBy = "date"; break;
+      case "3": this.orderValue = "3"; this.orderType = "desc"; this.orderBy = "value"; break;
+      case "4": this.orderValue = "4"; this.orderType = "asc"; this.orderBy = "value"; break;
+      case "5": this.orderValue = "5"; this.orderType = "desc"; this.orderBy = "notes"; break;
+      case "6": this.orderValue = "6"; this.orderType = "asc"; this.orderBy = "notes"; break;
+      default: this.orderValue = "1"; this.orderType = "desc"; this.orderBy = "date"; break;
+    }
     this.getSubCategories(this.state.parentID, this.state.parentCategory);
   }
 
@@ -608,9 +620,13 @@ class Management extends Component {
               onChange={this.showAllChecked}></input>
               Show All
             </label>
-            <select className="order_selector" value={this.currentOrder} onChange={this.orderChange}>
-              <option value="desc">Date ▽</option>
-              <option value="asc">Date △</option>
+            <select className="order_selector" value={this.orderValue} onChange={this.orderChange}>
+              <option value="1">▽ Date</option>
+              <option value="2">△ Date</option>
+              <option value="3">▽ Amount</option>
+              <option value="4">△ Amount</option>
+              <option value="5">▽ Notes</option>
+              <option value="6">△ Notes</option>
             </select>
             <div className="time_selector_area">
               <select className="time_selector" value={this.selectYear} onChange={this.yearChange} disabled={this.dateSelectEnable}>

@@ -1,0 +1,43 @@
+.disable-selection {
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer */
+    -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+    -webkit-user-select: none; /* Chrome, Safari, and Opera */
+    -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+}
+
+.Background
+{
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../picture/Budget.jpg");
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    top: 0;
+}
+
+.TrackingPage
+{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    align-items: top;
+    background-color: white;
+    width: 100vw;
+    height: 92vh;
+}
+
+
+.ControlBar
+{
+    display: inline-flex;
+    align-items: center;
+    background-color: lightskyblue;
+    width: 100vw;
+    height: 8vh;
+    border: 2px solid black;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    opacity: 0.95;
+}

@@ -438,14 +438,14 @@ app.get('/GetSubCategories', (req,res) => {
   .then((results) => {
     let categories = results;
     if(req.query.start === "" || req.query.end === "") {  // Show All Records
-      knex.select().from('records').where({category_id: req.query.parent_id}).orderBy('date', req.query.order)
+      knex.select().from('records').where({category_id: req.query.parent_id}).orderBy(req.query.orderBy, req.query.orderType)
       .then((results) => {
         let records = results;
         res.json({ categories: categories, records: records });
       })
       .catch(err => console.error(err));
     } else {  // Show Records based on the date filter
-      knex.select().from('records').where({category_id: req.query.parent_id}).orderBy('date', req.query.order)
+      knex.select().from('records').where({category_id: req.query.parent_id}).orderBy(req.query.orderBy, req.query.orderType)
       .andWhere('date', '>=', req.query.start).andWhere('date', '<=', req.query.end)
       .then((results) => {
         let records = results;
