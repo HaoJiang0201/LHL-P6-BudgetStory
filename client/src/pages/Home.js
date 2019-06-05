@@ -5,9 +5,9 @@ import Highchart from './Highchart'
 import Highcharts from 'highcharts';
 import NewRecord from './NewRecord'
 import DateRange from './DateRange.js'
-import '../App/styles/home.css'
 import Drilldown from 'highcharts/modules/drilldown';
 import Navbar from './Navbar.js';
+import '../App/styles/home.css'
 // check if HighchartsDrilldown has already been loaded
 if (!Highcharts.Chart.prototype.addSeriesAsDrilldown) {
   Drilldown(Highcharts);
@@ -34,7 +34,7 @@ class Home extends Component {
         drilldown: {
           series: []
         }
-      },
+      }
     }
     this.getCurrentCategory.bind(this);
   }
@@ -148,10 +148,9 @@ class Home extends Component {
           <div className="container">
               <NewRecord category={this.state.currentCategory} update={this.refreshDate.bind(this)}/>
             <div className="add_new_btns">
-              <div className='date update_area' id= "newRecord">
+              <div className='date update_area' id="newRecord">
                 <DateRange date={this.state.date} refreshDate={this.refreshDate.bind(this)}/>
               </div>
-
             </div>
             <Highchart Highcharts={Highcharts} type={"pie"} options={this.state.options} getCurrentCategory={this.getCurrentCategory}/>
           </div>

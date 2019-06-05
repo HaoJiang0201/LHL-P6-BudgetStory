@@ -11,7 +11,19 @@ class Highchart extends Component {
     this.state = {
       loading: true,
       options: {
+        title: {
+          text: 'Balance'
+        },
+        credits: {
+          enabled: false
+        },
         chart: {
+          // spacingTop: 0,
+          // spacingRight: 0,
+          // spacingBottom: 0,
+          // spacingLeft: 0,
+          width: 700,
+          height: 550,
           type: this.props.type,
           events: {
             drilldown: (e) => {
@@ -28,22 +40,21 @@ class Highchart extends Component {
             }
           }
         },
-        title: {
-          text: 'Balance'
-        },
-
-
-        credits: {
-          enabled: false
-        },
-
+        // legend: {
+        //   align: 'left',
+        //   layout: 'vertical',
+        //   verticalAlign: 'top',
+        //   x: -100,
+        //   y: 100
+        // },
         plotOptions: {
           series: {
             dataLabels: {
               enabled: true,
-              format: '{point.name}: ${point.v:.1f}, {point.y:.1f}%, {point.d}'
+              format: '${point.v:.1f}   {point.y:.1f}%   {point.d}   {point.name}'
             },
-            cursor: 'pointer',
+            showInLegend: true,
+            cursor: 'hand'
           }
         },
         tooltip: {
@@ -61,12 +72,15 @@ class Highchart extends Component {
           }
         ],
         drilldown: {
-          drillUpButton: {
-            position: {
-              x: -100,
-              y: 10
-            }
-          },
+          // drillUpButton: {
+          //   align: "left",
+          //   verticalAlign: "bottom",
+          //   position: {
+          //     x: 100,
+          //     y: 100
+          //   }
+          // },
+          // relativeTo: "spacingBox",
           series: []
         }
       }
@@ -85,9 +99,7 @@ class Highchart extends Component {
     options.plotOptions = this.state.options.plotOptions;
     options.tooltip = this.state.options.tooltip;
     return (
-      <div id="MajorChart" className="Hightchart">
         <HighchartsReact highcharts={this.props.Highcharts} options={options} />
-      </div>
     );
   }
 }

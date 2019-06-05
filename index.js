@@ -229,7 +229,6 @@ function compareDateInit() {
 function updateDateRanges(dateParams) {
   if(Object.keys(dateParams).length > 0) {
     let dateRange = JSON.parse(dateParams.dateRange);
-    console.log("updateDateRanges >>> dateRange =  ", dateRange);
     startList = dateRange.startList;
     endList = dateRange.endList;
     let length = startList.length;
@@ -312,7 +311,7 @@ function getCategoryValuForColunm(columnObj, timeID){
 
 /******** All HTTP Requires Based On Express ********/
 // Home Page: Achieve data from DB, regulate into hightchart style, and then send back to the front
-app.get('/api/HomeChart', (req,res) => {
+app.get('/Tracking', (req,res) => {
   // Update Date Range
   updateDateRange(req.query);
 

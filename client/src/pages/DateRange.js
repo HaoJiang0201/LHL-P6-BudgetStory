@@ -58,21 +58,16 @@ class DateRange extends Component {
   // }
 
   updateDate = () => {
-    let startDate = this.state.startDate.toISOString();
-    let endDate = this.state.endDate.toISOString();
+    let startDate = this.state.startDate.toISOString().split('T')[0];
+    let endDate = this.state.endDate.toISOString().split('T')[0];
     this.props.updateDate(startDate, endDate);
   }
 
   componentDidMount() {
-
+    this.updateDate();
   }
 
   render() {
-
-    // console.log(">>> DR: start = ", this.state.startDate);
-    // console.log(">>> DR: end = ", this.state.endDate);
-    // console.log(">>> DR: startISO = ", this.state.startDate.toISOString());
-    // console.log(">>> DR: endISO = ", this.state.endDate.toISOString());
 
     return (
       <div className="DateRange disable-selection">

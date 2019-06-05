@@ -15,14 +15,14 @@ class Navbar extends Component {
     return (
       <nav className="navbar">
         <div className="menu_button_area">
-          <a className="menu_button" href="/">
+          <a className="menu_button" href="/track">
             <div className="menu_button_image" id="home_button"></div>
-            Home
+            Track
           </a>
-          <a className="menu_button" href="/compare">
+          {/* <a className="menu_button" href="/compare">
             <div className="menu_button_image" id="compare_button"></div>
             Compare
-          </a>
+          </a> */}
           <a className="menu_button" href="/manage">
             <div className="menu_button_image" id="manage_button"></div>
             Manage
