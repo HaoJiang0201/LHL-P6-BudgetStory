@@ -39,6 +39,24 @@
     border-right: none;
 }
 
+.ViewByOption
+{
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+    border: 1.5px solid black;
+    text-align: center;
+    text-align-last: center;
+    margin-left: 8px;
+    margin-top: 2px;
+    border-radius: 5px;
+    outline: none;
+    min-width: 110px;
+    max-width: 110px;
+    min-height: 35px;
+    max-height: 35px;
+}
+
 .TrackingDataArea
 {
     display: flex;
@@ -53,8 +71,7 @@
 {
     display: flex;
     align-items: center;
-    /* background-color: lightsalmon; */
-    width: 50vw;
+    width: 45vw;
     height: 84vh;
     border: 2px solid black;
     border-top: none;
@@ -66,7 +83,6 @@
 {
     display: flex;
     align-items: center;
-    /* background-color: lightgreen; */
-    width: 50vw;
+    width: 55vw;
     height: 84vh;
 }

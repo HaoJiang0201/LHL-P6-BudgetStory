@@ -57,14 +57,16 @@ class DateRange extends Component {
   // static getDerivedStateFromProps(props, state) {
   // }
 
-  updateDate = () => {
-    let startDate = this.state.startDate.toISOString().split('T')[0];
-    let endDate = this.state.endDate.toISOString().split('T')[0];
-    this.props.updateDate(startDate, endDate);
+  UpdateDate = () => {
+    // let startDate = this.state.startDate.toISOString().split('T')[0];
+    // let endDate = this.state.endDate.toISOString().split('T')[0];
+    // console.log("DateRange: start = ", startDate);
+    // this.props.UpdateDate(startDate, endDate);
+    this.props.UpdateDate(this.state.startDate, this.state.endDate);
   }
 
   componentDidMount() {
-    this.updateDate();
+    this.UpdateDate();
   }
 
   render() {
@@ -91,7 +93,7 @@ class DateRange extends Component {
             onChange={this.handleChangeEnd}
           />
         </div>
-        <Button className="control_button" variant="info" onClick={this.updateDate}>
+        <Button className="control_button" variant="info" onClick={this.UpdateDate}>
           <div className="update_button_image"></div><p className="update_button_text">Update</p>
         </Button>
       </div>

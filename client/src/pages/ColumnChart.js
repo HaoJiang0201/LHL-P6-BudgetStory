@@ -7,10 +7,11 @@ class ColumnChart extends Component {
       this.state = {
         options: {
           chart: {
-            marginTop: 70,
-            type: 'column',
-            events: {
-            }
+            marginTop:75,
+            spacingLeft: 75,
+            width: 600,
+            height: 400,
+            type: 'column'
           },
           title: {
             text: 'Balance'
@@ -21,9 +22,9 @@ class ColumnChart extends Component {
           legend: {
             layout: 'horizontal',
             align: 'right',
-            x: -30,
+            x: 0,
             verticalAlign: 'top',
-            y: -10,
+            y: 0,
             floating: true,
             backgroundColor: (props.Highcharts.theme && props.Highcharts.theme.background2) || 'white',
             borderColor: '#CCC',
@@ -87,9 +88,6 @@ class ColumnChart extends Component {
       options.tooltip = this.state.options.tooltip;
       options.plotOptions = this.state.options.plotOptions;
       options.yAxis = this.state.options.yAxis;
-      // options.xAxis = this.props.options.xAxis;
-      // options.series = this.props.options.series;
-      // console.log("ColumnChart >>> options = ", options);
       return (
         <div id="ColunmChart" className="Hightchart">
           <HighchartsReact highcharts={this.props.Highcharts} options={options} />

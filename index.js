@@ -311,7 +311,7 @@ function getCategoryValuForColunm(columnObj, timeID){
 
 /******** All HTTP Requires Based On Express ********/
 // Home Page: Achieve data from DB, regulate into hightchart style, and then send back to the front
-app.get('/Tracking', (req,res) => {
+app.get('/Home', (req,res) => {
   // Update Date Range
   updateDateRange(req.query);
 
@@ -342,8 +342,8 @@ app.get('/Tracking', (req,res) => {
   .catch(err => console.error(err));
 });
 
-// Compare Page:
-app.get('/api/CompareChart', (req,res) => {
+// Tracking Page:
+app.get('/Tracking', (req,res) => {
   // console.log("app.get >>> Compare Page = ", req.query);
   compareDateInit();
   // // Update Date Range

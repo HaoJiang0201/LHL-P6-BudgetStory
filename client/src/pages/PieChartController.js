@@ -12,22 +12,24 @@ class PieChartController extends Component {
       options: {
         chart: {
           type: 'pie',
+          // spacingTop: 0,
+          // spacingRight: 0,
+          // spacingBottom: 0,
+          // spacingLeft: 10,
+          // marginRight: 10,
+          marginBottom:65,
+          width: 650,
+          height: 500,
           events: {
             drilldown: (e) => {
               let categoryID = e.seriesOptions.id;
               let categoryName = e.seriesOptions.name;
-              // props.Highcharts.charts.forEach((chart) => {
-              //   chart.setTitle({text: e.seriesOptions.name});
-              // });
               drillDownEvent(e, true);
               props.getCurrentCategory(categoryID, categoryName);
             },
             drillup: function (e) {
               let categoryID = e.seriesOptions.id;
               let categoryName = e.seriesOptions.name;
-              // props.Highcharts.charts.forEach((chart) => {
-              //   chart.setTitle({text: e.seriesOptions.name});
-              // });
               drillUpEvent(e, true);
               props.getCurrentCategory(categoryID, categoryName);
             }
@@ -43,8 +45,9 @@ class PieChartController extends Component {
           series: {
             dataLabels: {
               enabled: true,
-              format: '{point.name}: ${point.v:.1f}, {point.y:.1f}%, {point.d}'
+              format: '${point.v:.1f}   {point.y:.1f}%   {point.d}   {point.name}'
             },
+            showInLegend: true,
             cursor: 'pointer'
           }
         },
@@ -63,6 +66,14 @@ class PieChartController extends Component {
           }
         ],
         drilldown: {
+          // drillUpButton: {
+          //   position: {
+          //     align:"left",
+          //     verticalAlign:"top",
+          //     x:-100,
+          //     y:100
+          //   }
+          // },
           series: [
             {
               name: "Expenses",
@@ -106,19 +117,18 @@ class PieChartController extends Component {
   }
 
   componentDidMount() {
-
   }
 
   render() {
-    let options = this.props.options;//this.state.options;//
+
+    let options = this.props.options;
     options.chart = this.state.options.chart;
     options.title = {text: this.props.options.title}
     options.plotOptions = this.state.options.plotOptions;
     options.tooltip = this.state.options.tooltip;
+
     return (
-      <div id="PieChartController" className="Hightchart">
-        <HighchartsReact highcharts={this.props.Highcharts} options={options} />
-      </div>
+      <HighchartsReact highcharts={this.props.Highcharts} options={options} />
     );
   }
 }
