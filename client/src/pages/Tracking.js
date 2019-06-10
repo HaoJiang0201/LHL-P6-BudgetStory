@@ -338,17 +338,16 @@ class Tracking extends Component {
                 <Navbar/>
                 <div className="TrackingPage">
                     <div className="ControlBar">
-                        <DateRange date={this.state.date} UpdateDate={this.UpdateDate.bind(this)}/>
                         <b>View</b>
                         <select className="ViewByOption" value={this.state.viewOption} onChange={this.ViewOptionChange}>
                             <option value="1">Month</option>
                             <option value="2">Week</option>
                             <option value="3">Year</option>
                         </select>
+                        <DateRange date={this.state.date} UpdateDate={this.UpdateDate.bind(this)}/>
                     </div>
                     <div className="TrackingDataArea">
                         <div className="PieChartArea">
-                            {/* <Highchart Highcharts={Highcharts} type={"pie"} options={this.state.options} getCurrentCategory={this.getCurrentCategory.bind(this)}/> */}
                             <PieChartController Highcharts={Highcharts} options={this.state.options}
                             getCurrentCategory={this.GetCurrentCategory.bind(this)}/>
                         </div>

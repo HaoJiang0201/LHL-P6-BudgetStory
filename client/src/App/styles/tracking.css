@@ -37,6 +37,7 @@
     border-top: none;
     border-left: none;
     border-right: none;
+    padding-left: 20px;
 }
 
 .ViewByOption
@@ -47,7 +48,7 @@
     border: 1.5px solid black;
     text-align: center;
     text-align-last: center;
-    margin-left: 8px;
+    margin-left: 5px;
     margin-top: 2px;
     border-radius: 5px;
     outline: none;

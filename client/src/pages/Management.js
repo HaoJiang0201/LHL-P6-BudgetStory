@@ -52,7 +52,7 @@ class Management extends Component {
       createNewShow: false,
       editExistShow: false,
       deleteShow: false,
-      copyStatus: 0 //0-nothing, 1-copying, 2-cutting, 3-pasting?
+      copyStatus: 0 //0-nothing, 1-copying, 2-cutting, 3-pasting
     }
     this.date = new Date().toISOString().split('T')[0];
     this.selectYear = this.date.split('-')[0];
@@ -244,7 +244,8 @@ class Management extends Component {
       this.selectYear = date.split('-')[0];
       this.selectMonth = date.split('-')[1];
     }
-    this.copyContentsInit();
+    // 在此处加入粘贴板初始化，新建时会对复制粘贴产生影响，因此需要在粘贴过程完成后进行初始化，而不是这里
+    // this.copyContentsInit();
     this.getSubCategories(this.state.parentID, this.state.parentCategory);
   }
 
@@ -400,6 +401,7 @@ class Management extends Component {
       };
       axios.post('/NewRecord', {newRec})
       .then((response) => {
+        this.copyContentsInit();
         this.updateNewCategoryRecord(newRec.date);
       });
     }
@@ -409,6 +411,7 @@ class Management extends Component {
       const cutCat = this.cutContents;
       axios.post('/CutCategory', {cutCat})
       .then((response) => {
+        this.copyContentsInit();
         this.updateNewCategoryRecord("category");
       });
     }
@@ -417,6 +420,7 @@ class Management extends Component {
       const cutRec = this.cutContents;
       axios.post('/CutRecord', {cutRec})
       .then((response) => {
+        this.copyContentsInit();
         this.updateNewCategoryRecord(cutRec.date);
       });
     }
@@ -454,7 +458,7 @@ class Management extends Component {
       }
       switch(this.state.copyStatus) {
         case 0: this.pasteEnable = "disabled"; break;
-        case 1: this.copyEnable = "disabled";this.cutEnable = "disabled"; this.pasteEnable = ""; break;
+        case 1: this.copyEnable = "disabled"; this.cutEnable = "disabled"; this.pasteEnable = ""; break;
         case 2: this.copyEnable = "disabled";this.cutEnable = "disabled"; this.pasteEnable = ""; break;
         case 3: break;
         default: break;
