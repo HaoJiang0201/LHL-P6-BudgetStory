@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import HighchartsReact from 'highcharts-react-official';
 import { drillDownEvent } from "./DrillDownUp";
 import { drillUpEvent } from "./DrillDownUp";
-import '../App/styles/home.css';
 
 class Highchart extends Component {
   constructor(props) {

@@ -9,8 +9,8 @@ class ColumnChart extends Component {
           chart: {
             marginTop:75,
             spacingLeft: 75,
-            width: 600,
-            height: 400,
+            width: 700,
+            height: 450,
             type: 'column'
           },
           title: {

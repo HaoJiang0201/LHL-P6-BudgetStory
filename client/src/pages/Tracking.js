@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
-import Highchart from './Highchart'
 import Highcharts from 'highcharts';
 import PieChartController from './PieChartController.js'
 import ColumnChart from './ColumnChart.js';
 import Drilldown from 'highcharts/modules/drilldown';
-
 import Navbar from './Navbar.js'
 import DateRange from './DateRange.js'
-import Select from 'react-select';
 import '../App/styles/tracking.css'
 
 // Check if HighchartsDrilldown has already been loaded

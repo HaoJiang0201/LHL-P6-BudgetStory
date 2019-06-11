@@ -5,9 +5,8 @@
   width: 100vw;
   height: 8vh;
   font-family: Arial, Helvetica, sans-serif;
-  opacity: 0.85;
-  margin:0px;
-  padding:0px;
+  opacity: 0.8;
+  /* padding: none; */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer */
   -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
@@ -15,29 +14,14 @@
   -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
 }
 
-.navbar-brand {
-  color: lightblue;
-  font-weight: bold;
-  text-shadow: 0 1px 1px white;
-  font-size: 32px;
-  height: 8vh;
-  margin:0px 44vw 0px auto;
-}
-
-.menu_button_area {
-  display: flex;
-  align-items: center;
-  margin-left: 10px;
-  font-size:20px;
-}
-
 .menu_button {
   display: flex;
   align-items: center;
   color: white;
   background-color: black;
-  text-align: left;
-  margin: 10px;
+  margin-left: 0px;
+  margin-right: 15px;
+  margin-bottom: 15px;
   opacity: 0.85;
 }
 
@@ -48,29 +32,36 @@
 
 .menu_button_image
 {
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 25px;
-    height: 25px;
-    margin-right: 10px;
-    opacity: 0.85;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px;
+  opacity: 0.85;
+  margin-right: 5px;
 }
 
 .menu_button:hover .menu_button_image {
   opacity: 1;
 }
 
-#home_button
+#track_button
 {
-  background-image: url("../picture/Home.png"); 
+  background-image: url("../picture/Track.png"); 
 } 
-
-#compare_button
-{
-  background-image: url("../picture/Compare.png"); 
-}
 
 #manage_button
 {
   background-image: url("../picture/Manage.png"); 
 } 
+
+.navbar-brand {
+  color: lightblue;
+  font-weight: bold;
+  text-shadow: 0 1px 1px white;
+  font-size: 35px;
+  margin-left: 30vw;
+}
+
+.right-space {
+  margin-left:auto;
+}

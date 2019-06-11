@@ -14,14 +14,22 @@
     margin-right: auto;
     margin-left: auto;
     color: black;
+    background-color: lightseagreen;
     font-weight: bold;
     border: 1.5px solid black;
     min-width: 100px;
     height: 40px;
+    opacity: 0.9;
 }
 .control_button:hover
 {
-    border: 1.5px solid white;
+    border: 2px solid white;
+    opacity: 1;
+}
+.control_button:disabled
+{
+    border: none;
+    background-color: gray;
 }
 .control_button:disabled
 {
@@ -148,7 +156,7 @@
 }
 .CategoriesArea
 {
-    background-color: lightblue;
+    background-color: lightsteelblue;
     width: 50vw;
     height: 76vh;
     border: 2px solid black;
@@ -321,7 +329,7 @@
 }
 .RecordsArea
 {
-    background-color:lightblue; 
+    background-color:lightsteelblue; 
     width: 50vw;
     height: 76vh;
     border: 2px solid black;

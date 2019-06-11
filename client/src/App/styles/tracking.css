@@ -1,3 +1,19 @@
+.highcharts-background {
+    width: 0;
+    height: 0;
+}
+
+.highcharts-credits {
+    display: none;
+  }
+
+.highcharts-legend-box {
+    fill: white;
+    fill-opacity: 0.8;
+    stroke: black;
+    stroke-width: 0.5px;
+}
+
 .disable-selection {
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer */
@@ -56,6 +72,13 @@
     max-width: 110px;
     min-height: 35px;
     max-height: 35px;
+    opacity: 0.9;
+}
+
+.ViewByOption:hover
+{
+    border: 2px solid white;
+    opacity: 1;
 }
 
 .TrackingDataArea

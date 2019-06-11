@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker'
 import isAfter from 'date-fns/isAfter'
-import { Button } from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import '../App/styles/datepicker.css'
-// import '../App/styles/compare.css'
-// import '../App/styles/home.css'
 
 class DateRange extends Component {
   constructor(props) {
@@ -93,9 +90,9 @@ class DateRange extends Component {
             onChange={this.handleChangeEnd}
           />
         </div>
-        <Button className="control_button" variant="info" onClick={this.UpdateDate}>
+        <button className="control_button" onClick={this.UpdateDate}>
           <div className="update_button_image"></div><p className="update_button_text">Update</p>
-        </Button>
+        </button>
       </div>
     );
   }

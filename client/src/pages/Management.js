@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import NewRecord from './NewRecord'
-import DateRange from './DateRange.js'
 import CategoryItem from './CategoryItem'
 import RecordItem from './RecordItem'
 import '../App/styles/management.css'
@@ -10,7 +8,6 @@ import { Button, Modal, Form } from 'react-bootstrap';
 import Navbar from './Navbar.js';
 import CreateNewModal from './CreateNewModal.js';
 import EditExistModal from './EditExistModal.js';
-import { dateFormat } from 'highcharts';
 
 class Management extends Component {
 
@@ -530,7 +527,7 @@ class Management extends Component {
       DeleteModalContents = (
         <div>
           <Modal.Header className="modal_dialog_title" closeButton>
-            <Modal.Title >Delete Category <b>{editCategory.name}</b></Modal.Title>
+            <Modal.Title >Delete Category: <b>{editCategory.name}</b></Modal.Title>
           </Modal.Header>
           <Modal.Body className="modal_dialog_body">
             <Form id="delete_cr" onSubmit={this.deleteCategoryRecord}>
@@ -558,9 +555,9 @@ class Management extends Component {
     }
 
     let BackButton = (
-      <Button className="control_button back_btn" variant="info" onClick={this.backButtonClick}>
+      <button className="control_button back_btn" onClick={this.backButtonClick}>
         <div className="control_button_image" id="back_button_image"></div>Back
-      </Button>
+      </button>
     );
 
     if(this.state.parentID <= 0) {
@@ -588,23 +585,23 @@ class Management extends Component {
               </div>
             </div>
             <div className="CategoryBottomBar">
-              <Button className="control_button" disabled={this.newEnable} variant="info" onClick={this.newCategoryRecord}>
+              <button className="control_button" disabled={this.newEnable} onClick={this.newCategoryRecord}>
                 <div className="control_button_image" id="new_button_image"></div>New
-              </Button>
+              </button>
               <CreateNewModal createNewShow={this.state.createNewShow}
                 parentID={this.state.parentID} parentCategory={this.state.parentCategory}
                 updateNewCategoryRecord={(this.updateNewCategoryRecord.bind(this))}
                 dlgClose={this.dlgClose.bind(this)} />
-              <Button className="control_button" disabled={this.editEnable} variant="info" onClick={this.editCategoryRecord}>
+              <button className="control_button" disabled={this.editEnable} onClick={this.editCategoryRecord}>
                 <div className="control_button_image" id="edit_button_image"></div>Edit
-              </Button>
+              </button>
               <EditExistModal editExistShow={this.state.editExistShow}
                 editCategory={editCategory} editRecord={editRecord}
                 updateNewCategoryRecord={(this.updateNewCategoryRecord.bind(this))}
                 dlgClose={this.dlgClose.bind(this)} />
-              <Button className="control_button" disabled={this.deleteEnable} variant="info" onClick={this.showDeleteDialog}>
+              <button className="control_button" disabled={this.deleteEnable} onClick={this.showDeleteDialog}>
                 <div className="control_button_image" id="delete_button_image"></div>Delete
-              </Button>
+              </button>
               <Modal className="modal_dialog" show={this.state.deleteShow} onHide={this.dlgClose}>
                 {DeleteModalContents}
                 <Modal.Footer className="modal_dialog_footer">
@@ -664,15 +661,15 @@ class Management extends Component {
             </div>
           </div>
           <div className="RecordBottomBar">
-            <Button className="control_button" disabled={this.copyEnable} variant="info" onClick={this.copyCategoryRecord}>
+            <button className="control_button" disabled={this.copyEnable} onClick={this.copyCategoryRecord}>
               <div className="control_button_image" id="copy_button_image"></div>Copy
-            </Button>
-            <Button className="control_button" disabled={this.cutEnable} variant="info" onClick={this.cutCategoryRecord}>
+            </button>
+            <button className="control_button" disabled={this.cutEnable} onClick={this.cutCategoryRecord}>
               <div className="control_button_image" id="cut_button_image"></div>Cut
-            </Button>
-            <Button className="control_button" disabled={this.pasteEnable} variant="info" onClick={this.pasteCategoryRecord}>
+            </button>
+            <button className="control_button" disabled={this.pasteEnable} onClick={this.pasteCategoryRecord}>
               <div className="control_button_image" id="paste_button_image"></div>Paste
-            </Button>
+            </button>
           </div>
         </div>
         </div>

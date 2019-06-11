@@ -9,7 +9,6 @@
 .DateRange {
     display: flex;
     align-items: center;
-    /* margin-right: 30px; */
 }
 
 .CalendarArea {
@@ -36,17 +35,22 @@
 /* Buttons and Images */
 .control_button
 {
+    font-weight: bold;
     color: black;
+    background-color: lightseagreen;
     border: 1px solid black;
-    min-width: 110px;
-    max-width: 110px;
+    border-radius: 5px;
+    min-width: 120px;
+    max-width: 120px;
     max-height: 35px;
     margin-top:  2px;
     padding: 0px 0px 0px 0px;
+    opacity: 0.9;
 }
 .control_button:hover
 {
     border: 1px solid white;
+    opacity: 1;
 }
 .update_button_image
 {

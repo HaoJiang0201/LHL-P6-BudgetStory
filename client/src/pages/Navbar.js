@@ -6,30 +6,23 @@ class Navbar extends Component {
     super()
   }
 
-
   ComponentDidMount() {
-
   }
 
   render() {
     return (
-      <nav className="navbar">
-        <div className="menu_button_area">
-          <a className="menu_button" href="/track">
-            <div className="menu_button_image" id="home_button"></div>
-            Track
-          </a>
-          {/* <a className="menu_button" href="/compare">
-            <div className="menu_button_image" id="compare_button"></div>
-            Compare
-          </a> */}
-          <a className="menu_button" href="/manage">
-            <div className="menu_button_image" id="manage_button"></div>
-            Manage
-          </a>
-        </div>
+      <div className="navbar">
+        <a className="menu_button" href="/track">
+          <div className="menu_button_image" id="track_button"></div>
+          Track
+        </a>
+        <a className="menu_button" href="/manage">
+          <div className="menu_button_image" id="manage_button"></div>
+          Manage
+        </a>
         <p className="navbar-brand">Budget Story</p>
-      </nav>
+        <div className="right-space"></div>
+      </div>
     )
   }
 }
