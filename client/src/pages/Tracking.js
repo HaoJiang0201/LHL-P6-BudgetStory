@@ -37,6 +37,7 @@ class Tracking extends Component {
         super(props);
         this.state = {
             viewOption: "1",
+            selectOption: "1",
             currentCategory: {
               id: 0,
               name: "Balance"
@@ -64,6 +65,21 @@ class Tracking extends Component {
             }
         }
     }
+
+    // Refresh statement while the "select option" changed
+    SelectOptionChange = (event) => {
+        let selectOption = "1";
+        switch(event.target.value) {
+            case "1": selectOption = "1"; break;
+            case "2": selectOption = "2"; break;
+            default: selectOption = "1"; break;
+        }
+        this.setState({
+            ...this.state,
+            selectOption: selectOption
+        });
+    }
+
     // Refresh statement while the "view option" changed
     ViewOptionChange = (event) => {
         let viewOption = "1";
@@ -328,12 +344,20 @@ class Tracking extends Component {
     }
 
     render() {
+
+
+
         return (
             <div>
                 <div className="Background"></div>
                 <Navbar/>
                 <div className="TrackingPage">
                     <div className="ControlBar">
+                        <b>Select</b>
+                        <select className="SelectOption" value={this.state.selectOption} onChange={this.SelectOptionChange}>
+                            <option value="1">Quick</option>
+                            <option value="2">Calendar</option>
+                        </select>
                         <b>View</b>
                         <select className="ViewByOption" value={this.state.viewOption} onChange={this.ViewOptionChange}>
                             <option value="1">Month</option>

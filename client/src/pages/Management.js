@@ -59,6 +59,7 @@ class Management extends Component {
     this.newEnable = "disabled";
     this.editEnable = "disabled";
     this.deleteEnable = "disabled";
+    this.hideEnable = "disabled";
     this.copyEnable = "disabled";
     this.cutEnable = "disabled";
     this.pasteEnable = "disabled";
@@ -237,6 +238,7 @@ class Management extends Component {
   }
 
   updateNewCategoryRecord = (date) => {
+    console.log("date = ", date);
     if(date != "category" && date != "delete") {
       this.selectYear = date.split('-')[0];
       this.selectMonth = date.split('-')[1];
@@ -367,7 +369,7 @@ class Management extends Component {
           this.cutContents.id = this.state.recordSelect;
           this.cutContents.name = "";
           this.cutContents.value = record.value;
-          this.cutContents.date = record.date;
+          this.cutContents.date = record.date.split('T')[0];
           this.cutContents.notes = record.notes;
         }
       }
@@ -404,6 +406,7 @@ class Management extends Component {
     }
     // Cut Paste
     if(this.cutContents.name !== "") {
+      
       this.cutContents.parent_id = this.state.parentID;
       const cutCat = this.cutContents;
       axios.post('/CutCategory', {cutCat})
@@ -417,8 +420,9 @@ class Management extends Component {
       const cutRec = this.cutContents;
       axios.post('/CutRecord', {cutRec})
       .then((response) => {
+        let date = cutRec.date;
         this.copyContentsInit();
-        this.updateNewCategoryRecord(cutRec.date);
+        this.updateNewCategoryRecord(date);
       });
     }
     this.setState({
@@ -437,6 +441,7 @@ class Management extends Component {
       this.newEnable = "disabled";
       this.editEnable = "disabled";
       this.deleteEnable = "disabled";
+      this.hideEnable = "disabled";
       this.copyEnable = "disabled";
       this.cutEnable = "disabled";
       this.pasteEnable = "disabled";
@@ -445,11 +450,13 @@ class Management extends Component {
       if(this.state.categorySelect === 0 && this.state.recordSelect === 0) {
         this.editEnable = "disabled";
         this.deleteEnable = "disabled";
+        this.hideEnable = "disabled";
         this.copyEnable = "disabled";
         this.cutEnable = "disabled";
       } else {
         this.editEnable = "";
         this.deleteEnable = "";
+        this.hideEnable = "";
         this.copyEnable = "";
         this.cutEnable = "";
       }
@@ -566,6 +573,13 @@ class Management extends Component {
       );
     }
 
+
+    let HideButtonText = "Hide";
+
+    // if(this.state.parentID <= 0) {
+    //   HideButtonText = "Show";
+    // }
+
     return (
       <div>
         <div className="Background"></div>
@@ -577,7 +591,7 @@ class Management extends Component {
                 <div className="category_record_title_icon category_imgage"></div>
                 {this.state.parentCategory}
               </h5>
-              { BackButton  }
+              { BackButton }
             </div>
             <div className="CategoriesArea">
               <div className="category_item_list">
@@ -608,6 +622,9 @@ class Management extends Component {
                   <Button variant="danger" className="control_button submit_btn" type="submit" form="delete_cr">Confirm</Button>
                 </Modal.Footer>
               </Modal>
+              <button className="control_button" disabled={this.hideEnable} onClick={this.hideCategory}>
+                <div className="control_button_image" id="hide_button_image"></div>{ HideButtonText }
+              </button>
             </div>
           </div>
           <div className="RecordList">

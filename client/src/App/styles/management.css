@@ -81,6 +81,14 @@
 {
     background-image: url("../picture/Delete.png");
 }
+#hide_button_image
+{
+    background-image: url("../picture/Unlock.png");
+}
+#show_button_image
+{
+    background-image: url("../picture/Locked.png");
+}
 #copy_button_image
 {
     background-image: url("../picture/Copy.png");
