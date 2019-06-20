@@ -14,30 +14,6 @@ app.use(bodyParser.json())
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-// Vaz Example Codes
-{
-  // knex('categories').select()
-  // .then(categories => {
-  //   console.log("BS >>> categories = ", JSON.parse(JSON.stringify(categories)))
-  //   // let record = categories.map(category => {
-  //   //   return knex('categories').select().where('parent_id', category.id)
-  //   // });
-  //   // return Promise.all(categories);
-  //   return categories;
-  // })
-  // .then(results => {
-  //   console.log("BS >>> results1 = ", JSON.parse(JSON.stringify(results)));
-  //   return results.map(children => {
-  //     return { name: 'blah', data: children }
-  //   })
-  // })
-  // .then(results => {
-  //   console.log("BS >>> results2 = ", JSON.parse(JSON.stringify(results)));
-  //   // console.log(JSON.stringify(results, null, 2));
-  // })
-  // .catch(err => console.error(err));
-}
-
 /******** Public Objects and Arrays ********/
 let balanceObj = {};
 let allCategories = [];
@@ -81,7 +57,6 @@ function hasRecordIn(categoryObj) {
       allCategories.map(category => {
         if(category.parent_id === categoryObj.id) {
           if(hasRecord === false) {
-            // categoryObj.hasRecord = hasRecordIn(category);
             hasRecord = hasRecordIn(category);
           }
         }
@@ -164,7 +139,6 @@ function findAllChildren(categoryObj) {
       if(category.parent_id === categoryObj.id) {
         category.type = "category";
         category.value = 0;
-        // category.hasRecord = false;
         category.children = findAllChildren(category);
         children.push(category);
       }
@@ -235,8 +209,6 @@ function updateDateRanges(dateParams) {
     timePeriod.start = startList[0];
     timePeriod.end = endList[length-1];
   }
-  console.log("updateDateRanges >>> startList = ", startList);
-  console.log("updateDateRanges >>> endList = ", endList);
 }
 // Generate Array for column chart
 function createColumnArray () {
@@ -281,9 +253,7 @@ function createColumnArray () {
 function getCategoryValuForColunm(columnObj, timeID){
   let valueTotal = 0;
   let length = columnArray.length;
-  // console.log("length = ", length);
   for(let i = 1; i < length; i ++) {
-    // console.log("column id = ", i);
     // For Category
     if(columnArray[i].type === 1) {
       // Find Children
@@ -332,8 +302,6 @@ app.get('/Home', (req,res) => {
       balanceObj.children = findAllChildren(balanceObj);
       balanceObj.value += calculateValue(balanceObj);
       transferToChart();
-      // console.log("balanceChart.series = ", balanceChart.series);
-      // console.log("balanceChart.drilldown = ", balanceChart.drilldown);
       balanceChart.title = "Balance: $" + balanceObj.value/100;
       res.json(balanceChart);
     })
@@ -346,7 +314,7 @@ app.get('/Home', (req,res) => {
 app.get('/Tracking', (req,res) => {
   // console.log("app.get >>> Compare Page = ", req.query);
   compareDateInit();
-  // // Update Date Range
+  // Update Date Range
   updateDateRanges(req.query);
   // Select all Categories
   knex('categories').select()
@@ -367,14 +335,11 @@ app.get('/Tracking', (req,res) => {
       balanceObj.value += calculateValue(balanceObj);
       transferToChart();
       balanceChart.title = "Balance: $" + balanceObj.value/100;
-      // console.log("balanceChart.series = ", balanceChart.series);
-      // console.log("balanceChart.drilldown = ", balanceChart.drilldown);
 
       // Generate data for the column chart in compare page
       if(startList.length <= 0 || endList.length <= 0) {
         console.log("BS >>> app.get(Compare) no start or end time list");
       } else {
-        // console.log("BS >>> allRecords = ", allRecords);
         let columnObj = {};
         columnObj = {};
         columnObj.cid = 0;
@@ -394,8 +359,6 @@ app.get('/Tracking', (req,res) => {
         }
 
         let result = { pie: balanceChart, column: columnArray};
-        // console.log("BS >>> result.pie = ", result.pie);
-        // console.log("BS >>> result.column = ", result.column);
         res.json(result);
       }
     })
@@ -563,15 +526,13 @@ app.post('/DeleteCategory', (req, res) => {
 
       categoriesRemove = [];
       removeCategory(categoryDeleteId);
-      // console.log("categoriesRemove : ", categoriesRemove);
-      // console.log("recordsRemove : ", recordsRemove);
 
       if(recordsRemove.length > 0) {
         knex('records').whereIn('id', recordsRemove).del()
         .then(result => {
            knex('categories').whereIn('id', categoriesRemove).del()
           .then(result => {
-             res.json('categories delete successes');
+             res.json('categories delete successed');
           })
           .catch(err => console.error(err));
         })
