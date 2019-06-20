@@ -1,16 +1,14 @@
 /******** Server-Side Initialization and Moduels, Libraries Required ********/
 const express = require('express');
 const path = require('path');
-const ENV         = process.env.ENV || "development";
-const bodyParser  = require("body-parser");
-const knexConfig  = require("./knexfile");
-const knex        = require("knex")(knexConfig[ENV]);
-const knexLogger  = require('knex-logger');
+const ENV = process.env.ENV || "development";
+const bodyParser = require("body-parser");
+const knexConfig = require("./knexfile");
+const knex = require("knex")(knexConfig[ENV]);
+const knexLogger = require('knex-logger');
 const app = express();
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
-
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
