@@ -1,10 +1,9 @@
-# Budgestory
-Budgestory allows users to categorize their incomes and expenses. Categories can be created and sub categories can be nested within each other any number of times. Users can then navigate their finances by clicking on categories on a pie chart, which will render the subcategories of the chosen category. Each category will display the total value of all expenses of any category within that category. Users can view records by date and compare weeks and months to one another.
+# Budget Story
+Budget Story allows users to categorize their incomes and expenses. Categories can be created and sub categories can be nested within each other any number of times. Users can then navigate their finances by clicking on categories on a pie chart, which will render the subcategories of the chosen category. Each category will display the total value of all expenses of any category within that category. Users can view records by date and compare weeks and months to one another.
 
 Created By:
-
-* [Brendan Lee](https://github.com/boksul)
 * [Hao Jiang](https://github.com/HaoJiang0201)
+* [Brendan Lee](https://github.com/boksul)
 * [Nick Newburg](https://github.com/nnewburg)
 
 ## Tech Stack
@@ -33,8 +32,8 @@ In order to run this project node.js and npm both need to have been installed.
 After seeding the database the categories will be managed from the categories page. The root categories Incomes and Expenses cannot be edited or deleted, new categories or records can also not be created on this level. Double click on Incomes or Expenses to be enabled to begin making new categories.
 
 ## Screenshots
-
-![Screenshot of Budgestory](https://github.com/HaoJiang0201/LHL-P6-Budgestory/blob/master/doc/.png?raw=true)
+![Screenshot of Budgestory](https://github.com/HaoJiang0201/LHL-P6-Budgestory/blob/master/doc/Budget%20Story%20Track%20Page.jpg?raw=true)
+![Screenshot of Budgestory](https://github.com/HaoJiang0201/LHL-P6-Budgestory/blob/master/doc/Budget%20Story%20Manage%20Page.jpg?raw=true)
 
 ## Built With
 * [React]
