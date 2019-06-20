@@ -34,10 +34,7 @@ After seeding the database the categories will be managed from the categories pa
 
 ## Screenshots
 
-![Screenshot of Budgestory](https://github.com/nnewburg/finalSkeleton/blob/master/assets/Screenshot%20from%202019-05-13%2003-20-58.png?raw=true)
-![Screenshot of Budgestory](https://github.com/nnewburg/finalSkeleton/blob/master/assets/Screenshot%20from%202019-05-13%2003-21-30.png?raw=true)
-![Screenshot of Budgestory](https://github.com/nnewburg/finalSkeleton/blob/master/assets/Screenshot%20from%202019-05-13%2003-23-03.png?raw=true)
-![Screenshot of Budgestory](https://github.com/nnewburg/finalSkeleton/blob/master/assets/Screenshot%20from%202019-05-13%2003-30-12.png?raw=true)
+![Screenshot of Budgestory](https://github.com/HaoJiang0201/LHL-P6-Budgestory/blob/master/doc/.png?raw=true)
 
 ## Built With
 * [React]

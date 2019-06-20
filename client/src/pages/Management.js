@@ -622,9 +622,6 @@ class Management extends Component {
                   <Button variant="danger" className="control_button submit_btn" type="submit" form="delete_cr">Confirm</Button>
                 </Modal.Footer>
               </Modal>
-              <button className="control_button" disabled={this.hideEnable} onClick={this.hideCategory}>
-                <div className="control_button_image" id="hide_button_image"></div>{ HideButtonText }
-              </button>
             </div>
           </div>
           <div className="RecordList">

@@ -345,19 +345,12 @@ class Tracking extends Component {
 
     render() {
 
-
-
         return (
             <div>
                 <div className="Background"></div>
                 <Navbar/>
                 <div className="TrackingPage">
                     <div className="ControlBar">
-                        <b>Select</b>
-                        <select className="SelectOption" value={this.state.selectOption} onChange={this.SelectOptionChange}>
-                            <option value="1">Quick</option>
-                            <option value="2">Calendar</option>
-                        </select>
                         <b>View</b>
                         <select className="ViewByOption" value={this.state.viewOption} onChange={this.ViewOptionChange}>
                             <option value="1">Month</option>

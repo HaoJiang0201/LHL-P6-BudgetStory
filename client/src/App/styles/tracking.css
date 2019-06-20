@@ -76,6 +76,37 @@
     opacity: 0.9;
 }
 
+.time_selector
+{
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+    border: 1.5px solid black;
+    text-align: center;
+    text-align-last: center;
+    margin-right: 10px;
+    border-radius: 5px;
+    outline: none;
+    width: 80px;
+    height: 40px;
+    opacity: 0.9;
+}
+.time_selector:hover
+{
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+    border: 1.5px solid white;
+    opacity: 1;
+}
+.time_selector:disabled
+{
+    background-color: grey;
+    color: lightgrey;
+    border: none;
+    opacity: 1;
+}
+
 .ViewByOption
 {
     background-color: grey;
