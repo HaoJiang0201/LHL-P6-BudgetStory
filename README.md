@@ -16,16 +16,14 @@ Created By:
 In order to run this project node.js and npm both need to have been installed.
 
 ## Deployment
-<ol>
-<li>Clone this repo</li>
-<li>npm install within the main directory</li>
-<li>npm install within the client directory</li>
-<li>From the command line run knex migrate:latest</li>
-<li>From the command line run knex seed:run</li>
-<li>Run `npm run start` from the main directory</li>
-<li>Run `CHOKIDAR_USEPOLLING=true npm start` from the client directory</li>
-<li>Visit http://localhost:3000/</li>
-</ol>
+1. Clone this repo
+2. npm install within the main directory
+3. npm install within the client directory
+4. From the command line run knex migrate:latest
+5. From the command line run knex seed:run
+6. Run `npm run start` from the main directory
+8. Run `CHOKIDAR_USEPOLLING=true npm start` from the client directory
+9. Visit http://localhost:3000/
 
 ## Navigating the application
 
