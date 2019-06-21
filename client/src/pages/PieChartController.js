@@ -10,11 +10,6 @@ class PieChartController extends Component {
       options: {
         chart: {
           type: 'pie',
-          // spacingTop: 0,
-          // spacingRight: 0,
-          // spacingBottom: 0,
-          // spacingLeft: 10,
-          // marginRight: 10,
           marginBottom:65,
           width: 650,
           height: 500,
@@ -43,7 +38,7 @@ class PieChartController extends Component {
           series: {
             dataLabels: {
               enabled: true,
-              format: '${point.v:.1f}   {point.y:.1f}%   {point.d}   {point.name}'
+              format: "${point.v:.1f}   {point.y:.1f}%   {point.d}   {point.name}"
             },
             showInLegend: true,
             cursor: 'pointer'

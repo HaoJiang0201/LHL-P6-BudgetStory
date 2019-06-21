@@ -239,7 +239,7 @@ class Management extends Component {
 
   updateNewCategoryRecord = (date) => {
     console.log("date = ", date);
-    if(date != "category" && date != "delete") {
+    if(date !== "category" && date !== "delete") {
       this.selectYear = date.split('-')[0];
       this.selectMonth = date.split('-')[1];
     }
@@ -255,13 +255,13 @@ class Management extends Component {
       if(this.state.categorySelect === 1 || this.state.categorySelect === 2) {
         alert("Expenses and Incomes are default parent category which cannot be Edit.");
       } else {
-        if(this.state.categorySelect != 0) {
+        if(this.state.categorySelect !== 0) {
           this.setState({
             ...this.state,
             editExistShow: true
           });
         }
-        if(this.state.recordSelect != 0) {
+        if(this.state.recordSelect !== 0) {
           this.setState({
             ...this.state,
             editExistShow: true
@@ -278,13 +278,13 @@ class Management extends Component {
       if(this.state.categorySelect === 1 || this.state.categorySelect === 2) {
         alert("Expenses and Incomes are default parent category which cannot be Deleted.");
       } else {
-        if(this.state.categorySelect != 0) {
+        if(this.state.categorySelect !== 0) {
           this.setState({
             ...this.state,
             deleteShow: true
           });
         }
-        if(this.state.recordSelect != 0) {
+        if(this.state.recordSelect !== 0) {
           this.setState({
             ...this.state,
             deleteShow: true
@@ -296,7 +296,7 @@ class Management extends Component {
 
   deleteCategoryRecord = (event) => {
     event.preventDefault();
-    if(this.state.categorySelect != 0) {
+    if(this.state.categorySelect !== 0) {
       const delCategory = {
         id: this.state.categorySelect
       }
@@ -306,7 +306,7 @@ class Management extends Component {
         this.updateNewCategoryRecord("delete");
       });
     }
-    if(this.state.recordSelect != 0) {
+    if(this.state.recordSelect !== 0) {
       const delRecord = {
         id: this.state.recordSelect
       }
@@ -530,7 +530,7 @@ class Management extends Component {
 
     let DeleteModalContents;
 
-    if(this.state.categorySelect != 0) {
+    if(this.state.categorySelect !== 0) {
       DeleteModalContents = (
         <div>
           <Modal.Header className="modal_dialog_title" closeButton>
@@ -544,7 +544,7 @@ class Management extends Component {
         </div>
       );
     }
-    if(this.state.recordSelect != 0) {
+    if(this.state.recordSelect !== 0) {
       DeleteModalContents = (
         <div>
           <Modal.Header className="modal_dialog_title" closeButton>
@@ -572,13 +572,6 @@ class Management extends Component {
         <div className="back_btn_empty"></div>
       );
     }
-
-
-    let HideButtonText = "Hide";
-
-    // if(this.state.parentID <= 0) {
-    //   HideButtonText = "Show";
-    // }
 
     return (
       <div>

@@ -18,7 +18,7 @@ class EditExistModal extends Component {
 
     editCategoryRecord = (event) => {
         event.preventDefault();
-        if(this.props.editCategory.id != 0) {
+        if(this.props.editCategory.id !== 0) {
             const editCat = {
                 id: this.props.editCategory.id,
                 name: event.target.name.value,
@@ -30,7 +30,7 @@ class EditExistModal extends Component {
                 this.dlgClose();
             });
         }
-        if(this.props.editRecord.id != 0) {
+        if(this.props.editRecord.id !== 0) {
             let dateNew = event.target.date.value;
             const editRecord = {
                 id: this.props.editRecord.id,
@@ -49,7 +49,7 @@ class EditExistModal extends Component {
     render() {
         let EditCRContents;
         let EditTitle;
-        if(this.props.editCategory.id != 0) {
+        if(this.props.editCategory.id !== 0) {
             EditCRContents = (
                 <div className="dlg_contents">
                     <Form.Group controlId="recordAmount">
@@ -63,8 +63,7 @@ class EditExistModal extends Component {
                 <Modal.Title >Edit Category</Modal.Title>
             );
         }
-        if(this.props.editRecord.id != 0) {
-            let date = new Date().toISOString().split('T')[0];
+        if(this.props.editRecord.id !== 0) {
             EditCRContents = (
                 <div className="dlg_contents">
                     <Form.Group controlId="recordAmount">

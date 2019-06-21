@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import '../App/styles/management.css'
 import 'bootstrap/dist/css/bootstrap.css';
-import { Button,Form } from 'react-bootstrap';
 
 class CategoryItem extends Component {
 

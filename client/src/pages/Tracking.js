@@ -154,7 +154,7 @@ class Tracking extends Component {
           case 8: endDate = "31"; break;
           case 9: endDate = "30"; break;
           case 10: endDate = "31"; break;
-          case 1: endDate = "30"; break;
+          case 11: endDate = "30"; break;
           case 12: endDate = "31"; break;
           default : endDate = "31"; break;
         }
@@ -252,7 +252,7 @@ class Tracking extends Component {
         let startList = [];
         let endList = [];
         let startMonth = parseInt(start.stringISO.split('-')[1], 10);
-        let endMonth = parseInt(end.stringISO.split('-')[1], 10);
+        // let endMonth = parseInt(end.stringISO.split('-')[1], 10);
         let startDay = parseInt(start.stringISO.split('-')[2], 10);
         let endDay = parseInt(end.stringISO.split('-')[2], 10);
         let weekNum = parseInt((endDay-startDay)/7, 10) + 1;
